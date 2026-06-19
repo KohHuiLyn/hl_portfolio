@@ -1,3 +1,19 @@
+@font-face {
+  font-family: Milker;
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/Milker.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Reem Kufi Ink';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ReemKufiInk-Regular.ttf') format('truetype');
+}
+
 :root {
   --ink: #080808;
   --paper: #f6f0f0;
@@ -25,6 +41,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: 'Reem Kufi Ink', system-ui, sans-serif;
+  font-synthesis: weight;
+  font-weight: 700;
   max-width: 100%;
   overflow-x: hidden;
 }
