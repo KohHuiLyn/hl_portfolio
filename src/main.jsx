@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import anime from 'animejs/lib/anime.es.js';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
@@ -12,7 +12,8 @@ import {
   ProjectsSection,
   SkillsMarquee,
 } from './components/PortfolioSections';
-import { ProjectDetailPage, ProjectsPage } from './components/ProjectsPage';
+import { ProjectsPage } from './components/ProjectsPage';
+import { ProjectPage } from './pages/ProjectPage';
 import { projects, recentProjectRows } from './data/projects';
 import './styles.css';
 
@@ -142,6 +143,7 @@ const experiences = [
     company: 'ADTRO MEDIA',
     year: '2024-2025',
     role: 'Lead Frontend Developer & UI/UX Designer',
+    learnMore: '/projects/adtro',
     tags: ['ReactJS', 'React Native', 'Figma', 'Electron'],
     image: '/assets/jobs/adtro_live.png',
     summary: "I designed and developed Adtro's livestreaming ecosystem across web, mobile, and desktop platforms.",
@@ -154,6 +156,7 @@ const experiences = [
   {
     company: 'LCCL CODING ACADEMY',
     year: '2023-Present',
+    learnMore: '/projects/gameDesignCamp',
     role: 'Senior Coding Instructor',
     tags: ['Teaching', 'Curriculum Design', 'Problem Solving', 'Scratch'],
     image: '/assets/jobs/lccl.png',
@@ -202,10 +205,18 @@ function App() {
   const [activeAbout, setActiveAbout] = useState(0);
   const projectsRef = useRef(null);
   const pageRef = useRef(null);
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const isProjectsPage = pathname.startsWith('/projects');
   const current = experiences[activeExperience];
   const about = aboutScreens[activeAbout];
+
+  useLayoutEffect(() => {
+    if (hash) {
+      requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView());
+      return;
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname, hash]);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
@@ -283,7 +294,7 @@ function App() {
   }, [activeAbout]);
 
   const navLinks = [
-    ['projects', isProjectsPage ? '/projects' : '/#projects'],
+    ['projects', '/projects'],
     ['about', '/#about'],
     ['experience', '/#work'],
     ['contact me', '/#contact'],
@@ -308,7 +319,8 @@ function App() {
           </>
         )} />
         <Route path="/projects" element={<ProjectsPage projects={projects} />} />
-        <Route path="/projects/:projectId" element={<ProjectDetailPage projects={projects} />} />
+        <Route path="/projects/:projectId" element={<ProjectPage projects={projects} />} />
+        <Route path="/projects/:projectId/:tabId" element={<ProjectPage projects={projects} />} />
         <Route path="*" element={<ProjectsPage projects={projects} />} />
       </Routes>
       <Footer />

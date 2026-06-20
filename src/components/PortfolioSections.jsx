@@ -107,7 +107,9 @@ export function ExperienceSection({ current, experiences, activeExperience, onMo
           <div className="pill-row">{current.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
           <p className="experience-summary">{current.summary}</p>
           <ul>{current.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
-          <a className="outline-button compact" href="#contact">learn more <ArrowRight size={16} /></a>
+          <a className="outline-button compact" href={current.learnMore} target="_blank" rel="noopener noreferrer">
+            learn more <ArrowRight size={16} />
+          </a>
         </div>
         <img className="experience-image" src={current.image} alt={`${current.company} work`} />
       </div>
