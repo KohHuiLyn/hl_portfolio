@@ -38,6 +38,7 @@ export function ProjectPage({ projects }) {
 
   const tabs = project.caseStudy?.tabs ?? [];
   const activeTab = tabs.find((tab) => tab.id === tabId) ?? tabs[0];
+  const activeTags = activeTab?.tags ?? project.tags;
   const activeTabIndex = tabs.findIndex((tab) => tab.id === activeTab?.id);
   const showTabTitle = activeTabIndex > 0;
   const sourceSections = activeTab?.sections ?? project.caseStudy?.sections ?? getFallbackSections(project);
@@ -93,7 +94,7 @@ export function ProjectPage({ projects }) {
       <section className="case-study-header section-pad">
         <Link className="case-back-link" to="/projects"><ArrowLeft size={25} />back</Link>
         <h1 className="case-project-title">{project.title}</h1>
-        <div className="case-project-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+        <div className="case-project-tags">{activeTags.map((tag) => <span key={tag}>{tag}</span>)}</div>
         <ProjectTabs projectId={project.id} tabs={tabs} activeTabId={activeTab?.id} />
       </section>
       {showTabTitle && <section className="case-tab-title section-pad"><OverviewStar /><h2>{activeTab.label}</h2></section>}

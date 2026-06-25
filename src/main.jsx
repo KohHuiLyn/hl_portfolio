@@ -240,6 +240,26 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const intro = pageRef.current?.querySelector('[data-intro-copy]');
+    if (!intro) return undefined;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      anime({
+        targets: intro.querySelectorAll('[data-intro-word]'),
+        color: '#f6f0f0',
+        delay: anime.stagger(45),
+        duration: 420,
+        easing: 'easeOutQuad',
+      });
+      observer.disconnect();
+    }, { threshold: 0.35 });
+
+    observer.observe(intro);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const section = projectsRef.current;
     if (!section) return undefined;
 

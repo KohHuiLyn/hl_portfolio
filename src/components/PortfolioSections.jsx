@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { SiTiktok } from 'react-icons/si';
@@ -6,12 +6,24 @@ import { Link } from 'react-router-dom';
 import { ProjectCard } from './ProjectCard';
 
 export function Header({ LogoStar, navLinks }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header className="topbar">
       <Link className="brand" to="/#top"><LogoStar className="brand-mark" />hui lyn</Link>
-      <nav aria-label="Main navigation">
+      <button
+        className="nav-toggle"
+        type="button"
+        aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={isOpen}
+        aria-controls="main-navigation"
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <span /><span /><span />
+      </button>
+      <nav id="main-navigation" className={isOpen ? 'is-open' : ''} aria-label="Main navigation">
         {navLinks.map(([label, href]) => (
-          <Link key={label} className={label === 'contact me' ? 'contact-link' : ''} to={href}>{label}</Link>
+          <Link key={label} className={label === 'contact me' ? 'contact-link' : ''} to={href} onClick={() => setIsOpen(false)}>{label}</Link>
         ))}
       </nav>
     </header>
@@ -19,6 +31,11 @@ export function Header({ LogoStar, navLinks }) {
 }
 
 export function HeroSection({ RedStar, WhiteStar }) {
+  const introWords = [
+    'I enjoy designing and building digital products from start to finish.',
+    'From crafting intuitive UI/UX experiences to developing responsive frontend applications, I love turning ideas into products that are both functional and enjoyable to use.',
+  ];
+
   return (
     <>
       <section id="top" className="hero section-pad">
@@ -32,11 +49,13 @@ export function HeroSection({ RedStar, WhiteStar }) {
       </section>
       <section className="intro-band">
         <WhiteStar className="star" />
-        <p>
-          I enjoy designing and building <strong data-landing-highlight>digital products</strong> from start to finish.
-          From crafting intuitive <strong data-landing-highlight>UI/UX experiences</strong> to developing responsive
-          <strong data-landing-highlight> frontend applications</strong>, I love turning ideas into products that are both
-          functional and enjoyable to use.
+        <p data-intro-copy>
+          {introWords.map((sentence, sentenceIndex) => (
+            <React.Fragment key={sentence}>
+              {sentence.split(' ').map((word, index) => <span data-intro-word key={`${word}-${index}`}>{word}{' '}</span>)}
+              {sentenceIndex === 0 && <br />}
+            </React.Fragment>
+          ))}
         </p>
       </section>
     </>
@@ -78,12 +97,13 @@ export function AboutSection({ about, aboutScreens, activeAbout, onSelectAbout }
     <section id="about" className="about section-pad">
       <h2>ABOUT ME</h2>
       <div className="about-copy">
-        <div><h3 data-about-title>{about.heading}</h3><p>{about.copy}</p><strong>{about.skills}</strong></div>
+        <h3 data-about-title>{about.heading}</h3>
         <div className="about-selector" aria-label="About me categories">
           {aboutScreens.map((item, index) => (
             <button key={item.id} type="button" className={index === activeAbout ? 'active' : ''} onClick={() => onSelectAbout(index)}>{item.label}</button>
           ))}
         </div>
+        <div className="about-details"><p>{about.copy}</p><strong>{about.skills}</strong></div>
       </div>
       <div className="lane-grid">
         {about.cards.map((lane) => (
@@ -123,12 +143,29 @@ export function ExperienceSection({ current, experiences, activeExperience, onMo
 }
 
 export function ContactSection({ opportunities, CardStar }) {
+  const [spinningStar, setSpinningStar] = useState(null);
+
   return (
     <section id="contact" className="contact-section section-pad">
       <h2>READY FOR THE NEXT<br />CHALLENGE!</h2>
       <div className="opportunity-grid">
         {opportunities.map((item) => (
-          <article key={item.title}><CardStar className="opportunity-star" color={item.color} /><h3>{item.title}</h3><p>{item.copy}</p></article>
+          <article key={item.title}>
+            <button
+              className="opportunity-star-button"
+              type="button"
+              aria-label={`Spin ${item.title} star`}
+              onClick={() => {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                setSpinningStar(null);
+                requestAnimationFrame(() => setSpinningStar(item.title));
+              }}
+              onAnimationEnd={() => setSpinningStar(null)}
+            >
+              <CardStar className={`opportunity-star ${spinningStar === item.title ? 'is-spinning' : ''}`} color={item.color} />
+            </button>
+            <h3>{item.title}</h3><p>{item.copy}</p>
+          </article>
         ))}
       </div>
       <p className="email-line">Drop me an email at <a href="mailto:kohhuilyn@gmail.com">kohhuilyn@gmail.com</a></p>

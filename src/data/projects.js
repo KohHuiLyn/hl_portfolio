@@ -78,7 +78,7 @@ export const projects = [
   {
     id: 'adtro',
     title: 'Adtro',
-    tags: ['Frontend Dev', 'Mobile Dev', 'UI/UX'],
+    tags: ['Web Dev', 'Mobile Dev', 'UI/UX', 'User Research', 'ReactJS', 'React Native', 'Next.js', 'Electron', 'Logo', 'Figma', 'Asset Creation'],
     image: '/assets/projects/project-thumbnails/Adtro.png',
     accent: '#ee7041',
     description: 'Livestream commerce platform for multistreaming, product management, and business operations.',
@@ -94,12 +94,12 @@ export const projects = [
               accent: 'blue',
               body: [
                 'Adtro is a livestream commerce platform that enables creators and businesses to stream across YouTube, Facebook, and Instagram while managing products, audience engagement, and business operations from a single ecosystem.',
-                'I contributed across the web portal, mobile application, desktop application, and marketing website, working on both UI/UX design and frontend development.',
+                'I contributed across the web portal, mobile application, desktop application, and information website, working on both UI/UX design and frontend development.',
               ],
             },
             {
               type: 'gallery',
-              title: 'Ecosystem',
+              title: 'Products',
               accent: 'red',
               images: adtroCaseStudyAssets.ecosystem.map((src, index) => ({
                 id: `ecosystem-${index}`,
@@ -113,15 +113,27 @@ export const projects = [
               role: 'Lead Frontend Developer & UI/UX Designer',
               year: '2024 - 2025',
               accent: 'green',
-              body: 'I was responsible for shaping both the visual direction and frontend experience of key parts of the Adtro ecosystem, from early product concepts to production-ready interfaces.',
-              tools: ['ReactJS', 'React Native', 'Next.js', 'Electron', 'Figma'],
+              body: 'I was responsible for shaping both the visual direction and technical implementation of key parts of the Adtro ecosystem, contributing across UI/UX design, frontend development, desktop applications, and livestreaming infrastructure.',
+              tools: [
+                'ReactJS',
+                'React Native',
+                'Next.js',
+                'Electron',
+                'Figma',
+                'Flask',
+                'FFmpeg',
+                'NGINX'
+              ],
               contributions: [
                 'Designed web and mobile product interfaces',
                 'Built frontend features across web, mobile, and desktop platforms',
                 'Created and maintained Adtro’s design system',
-                'Contributed to livestreaming and product management workflows',
-                'Designed brand assets, marketing visuals, and presentation decks',
-              ],
+                'Developed livestreaming workflows and media pipelines',
+                'Implemented FFmpeg-based camera capture and stream processing',
+                'Built Flask services that interfaced with NGINX streaming infrastructure',
+                'Contributed to multi-platform streaming across YouTube, Facebook, and Instagram',
+                'Designed brand assets, marketing visuals, and presentation decks'
+              ]
             },
             {
               type: 'carousel',
@@ -138,6 +150,7 @@ export const projects = [
         {
           id: 'design',
           label: 'Design',
+          tags: ['Logo', 'Asset Creation', 'UI/UX', 'User Research', 'Figma'],
           sections: [
             {
               type: 'text',
@@ -178,7 +191,7 @@ export const projects = [
               title: 'Prototyping',
               accent: 'red',
               image: '/assets/projects/adtro/design/figma.png',
-              body: 'Translated rough meeting sketches, early ideas, and business requirements into interactive Figma prototypes. These prototypes helped align stakeholders, validate flows, and reduce ambiguity before development began.',
+              body: 'Translated rough meeting sketches, early ideas, and business requirements into user journeys and finally, into Figma prototypes. These prototypes helped align stakeholders, validate flows, and reduce ambiguity before development began.',
               imagePosition: 'right',
             },
 
@@ -187,6 +200,7 @@ export const projects = [
         {
           id: 'information-website',
           label: 'Information Website',
+          tags: ['Figma', 'Asset Creation', 'UI/UX', 'Next.js', 'Webflow'],
           sections: [
             {
               type: 'longImageSidebar',
@@ -210,11 +224,13 @@ export const projects = [
         {
           id: 'mobile-development',
           label: 'Mobile Development',
+          tags: ['React Native', 'Figma', 'Asset Creation', 'User Research'],
           sections: [
             {
               type: 'imageText',
               title: 'Mobile Experience',
               accent: 'blue',
+              layout: 'fullHeight',
               image: adtroCaseStudyAssets.mobileFlow,
               body: 'Designed and developed mobile workflows that allowed creators to manage livestreams, products, and audience interactions with minimal friction. The focus was on keeping key actions accessible during live sessions while maintaining a clean and consistent interface.',
             },
@@ -223,19 +239,20 @@ export const projects = [
               title: 'Mobile Development Video',
               accent: 'green',
               src: '/assets/projects/adtro/mobile dev/adtro.mp4',
-              body: 'A walkthrough of the Adtro mobile development experience.',
+              body: 'This video showcases a user journey of a Livestreamer, where they go Live on Instagram and Youtube at the same time using Adtro\'s mobile app. They are able to receive and send out comments through Adtro.',
             },
             {
               type: 'gallery',
               title: 'Mobile Screens',
               accent: 'blue',
-              images: adtroCaseStudyAssets.mobileScreens.map((src, index) => ({ id: `adtro-mobile-${index}`, src, alt: `Adtro mobile screen ${index + 1}`, variant: 'mobile' })),
+              images: adtroCaseStudyAssets.mobileScreens.map((src, index) => ({ id: `adtro-mobile-${index}`, src, alt: `Adtro mobile screen ${index + 1}`,  })),
             },
           ],
         },
         {
           id: 'web-portal',
           label: 'Web Portal',
+          tags: ['ReactJS', 'Figma', 'User Research', 'UI/UX', 'Web Dev'],
           sections: [
             {
               type: 'imageText',
@@ -256,6 +273,7 @@ export const projects = [
         {
           id: 'desktop-app',
           label: 'Desktop App',
+          tags: ['Electron'],
           sections: [
             {
               type: 'imageText',
@@ -274,10 +292,10 @@ export const projects = [
   {
     id: 'stylesphere',
     title: 'StyleSphere',
-    tags: ['UI/UX', 'User Research', 'React Native'],
+    tags: ['UI/UX', 'Mobile Dev', 'Web Dev', 'User Research', 'React Native', 'Next.js', 'Figma'],
     image: '/assets/projects/project-thumbnails/Stylesphere.png',
     accent: '#4cc7a6',
-    description: 'Fashion discovery app with personalized recommendations and visual-fit shopping flows. I contributed by making the UI/UX design and frontend development for the mobile and web application, creating a design system, and conducting user research to validate design decisions.',
+    description: 'Fashion discovery app with personalised recommendations and visual-fit shopping flows. A user could "Try on" a piece of clothing by uploading an image of their body and our AI powered Virtual Try-on would add the clothing onto their body. I contributed by making the UI/UX design and frontend development for the mobile and web application, creating a design system, and conducting user research to validate design decisions.',
     caseStudy: {
       sections: [
         {
@@ -320,7 +338,7 @@ export const projects = [
   {
     id: 'postloo',
     title: 'PostLoo',
-    tags: ['UI/UX', 'Kotlin', 'User Research', 'Computer Vision', 'MediaPipe'],
+    tags: ['UI/UX', 'Kotlin', 'User Research', 'Computer Vision', 'MediaPipe', 'Figma', 'Asset Creation'],
     image: '/assets/projects/project-thumbnails/Toilet Troubles.png',
     accent: '#5f615f',
     description: 'PostLoo is an iPad application that reimagines how users rate public restrooms using computer vision and gesture recognition. The project focused on creating a faster and more engaging feedback experience. I contributed to the UI/UX design, user research, gesture-recognition implementation, and mascot animations that gave the product a playful personality.',
@@ -344,7 +362,7 @@ export const projects = [
   {
     id: 'splitr',
     title: 'Splitr',
-    tags: ['UI/UX', 'Frontend Dev', 'Blockchain'],
+    tags: ['UI/UX', 'Web Dev', 'Blockchain', 'Figma'],
     image: '/assets/projects/project-thumbnails/Splitr.png',
     accent: '#5f615f',
     description: 'Splitr is a blockchain-based revenue sharing platform built on Aptos that enables teams and collaborators to distribute earnings transparently through smart contracts. I designed the user experience and frontend interfaces, simplifying complex blockchain interactions into workflows that felt approachable for everyday users.',
@@ -352,7 +370,7 @@ export const projects = [
   {
     id: 'plantpal',
     title: 'PlantPal',
-    tags: ['UI/UX', 'Mobile Dev'],
+    tags: ['UI/UX', 'Mobile Dev', 'Figma', 'React Native', 'Computer Vision', 'User Research'],
     image: '/assets/projects/project-thumbnails/PlantPal.png',
     accent: '#5f615f',
     description: 'PlantPal is a mobile application that helps users identify plant health issues and receive care recommendations from a single photo. The project focused on making plant care more accessible through a simple and intuitive experience. I designed the mobile interface and user flows, balancing educational content with ease of use.',
@@ -368,7 +386,7 @@ export const projects = [
   {
     id: 'cooked-fever',
     title: 'Cooked Fever',
-    tags: ['Game Design', 'Assets & Sound Design', 'Java'],
+    tags: ['Game Design', 'Asset Creation','Sound Design', 'Java'],
     image: '/assets/projects/project-thumbnails/Cooked Fever.png',
     accent: '#5f615f',
     description: 'Cooked Fever is a cooking-themed game where players prepare meals for customers under time pressure. Beyond developing the gameplay, I designed and illustrated all game assets from scratch, including food items, kitchen equipment, UI elements, and visual effects, giving the game a distinct handmade style.',
@@ -383,7 +401,7 @@ export const projects = [
   {
     id: 'gameDesignCamp',
     title: "LCCL Game Design Curriculum",
-    tags: ['Game Design', 'Teaching','Assets & Sound Design'],
+    tags: ['Game Design', 'Teaching','Asset Creation', 'Sound Design'],
     image: '/assets/projects/project-thumbnails/Curriculum Design.png',
     accent: '#5f615f',
     description: 'I developed and taught a game design curriculum at LCCL Coding Academy, guiding students through the process of creating their own games like Planning, Pixel Art, Animation, Song composition, using accessible tools such as Piskel and Bandlab. The curriculum covered game mechanics, level design, asset creation, and sound design, culminating in a final project where students showcased their original game ideas. See more at: https://www.lcclcoding.com/holidays/game-design/',
@@ -393,7 +411,7 @@ export const projects = [
   {
     id: 'hex',
     title: "Hex's Adventure",
-    tags: ['Game Design', 'Assets & Sound Design', 'Godot'],
+    tags: ['Game Design', 'Asset Creation', 'Sound Design', 'Godot'],
     image: '/assets/projects/hex/hex.png',
     accent: '#5f615f',
     description: 'A roguelike platformer where players control a witch navigating magical environments, built in Godot with custom game assets.',
@@ -401,7 +419,7 @@ export const projects = [
   {
     id: 'littlebunchclub',
     title: 'Little Bunch Club',
-    tags: ['Logo'],
+    tags: ['Logo', 'Asset Creation'],
     image: '/assets/projects/littlebunchclub/littlebunchclub_thumbnail.png',
     accent: '#5f615f',
     description: "Little Bunch Club is a florist brand identity project created for a small business specializing in handcrafted floral arrangements. The project involved logo exploration, moodboarding, typography selection, and visual identity development, resulting in a soft and approachable brand personality.",
@@ -418,7 +436,7 @@ export const projects = [
   {
     id: 'elo',
     title: 'ELO Calculation System',
-    tags: ['UI/UX', 'Frontend Dev'],
+    tags: ['UI/UX', 'Web Dev', 'Figma', 'ReactJS', 'Java'],
     image: '/assets/projects/elo/screenshots/1_Login.png',
     accent: '#5f615f',
     description: 'The ELO Calculation System is a tournament management platform inspired by League of Legends, designed to handle player rankings, match history, brackets, and post-game reporting. I designed the UI/UX to closely reflect League\'s visual language while building frontend components and gathering assets to create a cohesive competitive gaming experience.',
@@ -433,7 +451,7 @@ export const projects = [
   {
     id: 'jiakerz',
     title: 'Jiakerz',
-    tags: ['Content Creation','Storytelling'],
+    tags: ['Content Creation','Storytelling', 'Asset Creation', 'Logo', 'Social Media'],
     image: '/assets/projects/jiakerz/Jiakerz.png',
     accent: '#5f615f',
     description: 'Jiakerz is a food discovery content brand co-founded with a close friend to share restaurant reviews, recommendations, and food experiences through short-form content. Through collaborations with restaurants and cafes, we produced marketing reels, slideshows, and social media content that accumulated over 150,000 views and 14,000+ likes across platforms.',
@@ -449,7 +467,7 @@ export const projects = [
   {
     id: 'third-eye',
     title: 'Third Eye',
-    tags: ['Computer Vision', 'OpenCV', 'MediaPipe'],
+    tags: ['Computer Vision', 'OpenCV', 'MediaPipe', 'Python'],
     image: '/assets/projects/project-thumbnails/Third Eye.png',
     accent: '#5f615f',
     description: 'Third Eye is a computer vision project developed to analyze bowling technique by measuring back angle and release timing. Using MediaPipe and pose estimation, the system helps bowlers identify whether their release was early, late, or on time, providing objective feedback that would otherwise require manual coaching analysis.',
