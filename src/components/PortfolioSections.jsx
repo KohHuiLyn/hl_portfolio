@@ -33,15 +33,15 @@ export function Header({ LogoStar, navLinks }) {
 export function HeroSection({ RedStar, WhiteStar }) {
   const introWords = [
     'I enjoy designing and building digital products from start to finish.',
-    'From crafting intuitive UI/UX experiences to developing responsive frontend applications, I love turning ideas into products that are both functional and enjoyable to use.',
+    'From crafting intuitive UI/UX experiences to developing fullstack applications, I love turning ideas into products that are both functional and enjoyable to use.',
   ];
 
   return (
     <>
       <section id="top" className="hero section-pad">
         <div className="hero-kicker">
-          <span data-landing-word>UI/UX DESIGNER &</span><br />
-          <span data-landing-word>FRONTEND DEVELOPER</span>
+          <span data-landing-word>Computer science undergraduate</span><br />
+          {/* <span data-landing-word>FRONTEND DEVELOPER</span> */}
         </div>
         <p className="hero-note" data-landing-word>developing ideas into<br />products</p>
         <h1><span data-landing-word>HELLO!</span><br /><span data-landing-word>I'M HUI LYN!</span></h1>

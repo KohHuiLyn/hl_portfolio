@@ -50,24 +50,7 @@ function CardStar({ className = '', color = '#DEA439' }) {
 }
 
 const aboutScreens = [
-  {
-    id: 'designer',
-    label: 'designer',
-    heading: "I'M A DESIGNER",
-    copy: (
-      <>
-        I enjoy crafting <span className="key-underline">intuitive</span> digital experiences, from
-        <span className="key-underline"> brand identities and design systems</span> to interfaces
-        that people genuinely enjoy using.
-      </>
-    ),
-    skills: 'ui/ux, figma, photoshop, branding, design systems',
-    cards: [
-      { title: 'brand identity', image: '/assets/designer-cards/Brand Identity.png' },
-      { title: 'ui/ux & design systems', image: '/assets/designer-cards/uiux.png' },
-      { title: 'illustrations & visual design', image: '/assets/designer-cards/illustrations & visual design.png' },
-    ],
-  },
+
   {
     id: 'developer',
     label: 'developer',
@@ -83,11 +66,29 @@ const aboutScreens = [
     skills: 'react, react native, next.js, nestjs, python, mysql',
     cards: [
       {
-        title: 'frontend & mobile development',
+        title: 'Frontend & Mobile Development',
         image: '/assets/developer-cards/frontend & mobile development.png',
       },
-      { title: 'fullstack systems', image: '/assets/developer-cards/Fullstack Systems.png' },
-      { title: 'AI systems', image: '/assets/developer-cards/AI systems.png' },
+      { title: 'Fullstack Systems', image: '/assets/developer-cards/Fullstack Systems.png' },
+      { title: 'AI Systems', image: '/assets/developer-cards/AI systems.png' },
+    ],
+  },
+    {
+    id: 'designer',
+    label: 'designer',
+    heading: "I'M A DESIGNER",
+    copy: (
+      <>
+        I enjoy crafting <span className="key-underline">intuitive</span> digital experiences, from
+        <span className="key-underline"> brand identities and design systems</span> to interfaces
+        that people genuinely enjoy using.
+      </>
+    ),
+    skills: 'ui/ux, figma, photoshop, branding, design systems',
+    cards: [
+      { title: 'Brand identity', image: '/assets/designer-cards/Brand Identity.png' },
+      { title: 'UI/UX & Design systems', image: '/assets/designer-cards/uiux.png' },
+      { title: 'Illustrations & Visual Design', image: '/assets/designer-cards/illustrations & visual design.png' },
     ],
   },
   {
@@ -104,9 +105,9 @@ const aboutScreens = [
     ),
     skills: 'Teaching, Curriculum Design, Problem Solving, Mentorship, Game Design',
     cards: [
-      { title: 'teaching & mentoring', image: '/assets/educator-cards/Teaching & Mentoring.png' },
-      { title: 'curriculum design', image: '/assets/educator-cards/Curriculum Design.png' },
-      { title: 'workshops & camps', image: '/assets/educator-cards/Workshops & Camps.png' },
+      { title: 'Teaching & Mentoring', image: '/assets/educator-cards/Teaching & Mentoring.png' },
+      { title: 'Curriculum Design', image: '/assets/educator-cards/Curriculum Design.png' },
+      { title: 'Workshops & Camps', image: '/assets/educator-cards/Workshops & Camps.png' },
     ],
   },
   {
@@ -123,9 +124,9 @@ const aboutScreens = [
     ),
     skills: 'Content Creation, Brand Building, Social Media Marketing, Storytelling, Video Editing',
     cards: [
-      { title: 'jiakerz', image: '/assets/content-creation-cards/Jiakerz.png' },
-      { title: "jiakerz's branding & identity", image: '/assets/content-creation-cards/Branding & Identity.png' },
-      { title: 'content production', image: '/assets/content-creation-cards/Content Production.png' },
+      { title: 'Jiakerz', image: '/assets/content-creation-cards/Jiakerz.png' },
+      { title: "Jiakerz's Branding & Identity", image: '/assets/content-creation-cards/Branding & Identity.png' },
+      { title: 'Content Production', image: '/assets/content-creation-cards/Content Production.png' },
     ],
   },
 ];
