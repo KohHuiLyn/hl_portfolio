@@ -186,7 +186,7 @@ const experiences = [
 const opportunities = [
   {
     title: 'Full-Time Roles',
-    copy: 'Seeking opportunities in UI/UX Design, Frontend Development, and Product Design.',
+    copy: 'Seeking opportunities in UI/UX Design, Full stack Development, and Product Design.',
     color: '#e7aa2f',
   },
   {

@@ -33,6 +33,7 @@
 html {
   max-width: 100%;
   overflow-x: hidden;
+  scroll-padding-top: var(--nav-height);
   scroll-behavior: smooth;
 }
 
@@ -45,6 +46,7 @@ body {
   font-weight: 700;
   max-width: 100%;
   overflow-x: hidden;
+  padding-top: var(--nav-height);
 }
 
 body,
@@ -91,11 +93,12 @@ main {
   height: var(--nav-height);
   justify-content: space-between;
   padding: 0 clamp(18px, 4vw, 74px);
-  position: -webkit-sticky;
-  position: sticky;
+  position: fixed;
+  left: 0;
+  right: 0;
   top: 0;
   width: 100%;
-  z-index: 20;
+  z-index: 1000;
 }
 
 .brand {
@@ -317,11 +320,50 @@ main {
   margin-bottom: 10px;
 }
 
+.project-category-tabs {
+  align-items: center;
+  display: flex;
+  gap: clamp(34px, 7vw, 118px);
+  margin: 0 0 clamp(22px, 3vw, 32px);
+}
+
+.project-category-tabs button {
+  background: transparent;
+  border: 0;
+  border-bottom: 4px solid transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: 'Reem Kufi Ink', system-ui, sans-serif;
+  font-size: clamp(18px, 1.4vw, 24px);
+  font-weight: 900;
+  line-height: 1;
+  padding: 0 10px 8px;
+}
+
+.project-category-tabs button.active,
+.project-category-tabs button:hover {
+  border-bottom-color: var(--ink);
+}
+
+.project-filter-shell {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
 .project-filters {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 12px;
-  margin-bottom: clamp(28px, 4vw, 48px);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.project-filters::-webkit-scrollbar {
+  display: none;
 }
 
 .project-filters button {
@@ -334,11 +376,31 @@ main {
   font-size: 14px;
   font-weight: 900;
   padding: 10px 16px;
+  white-space: nowrap;
 }
 
 .project-filters button.active,
 .project-filters button:hover {
   background: var(--ink);
+}
+
+.filter-scroll-button {
+  align-items: center;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  padding: 0;
+  width: 42px;
+}
+
+.filter-scroll-button:hover {
+  background: var(--ink);
+  color: white;
 }
 
 .all-project-grid {
@@ -1061,6 +1123,30 @@ footer span {
   .lane-grid,
   .opportunity-grid {
     grid-template-columns: 1fr;
+  }
+
+  .project-category-tabs {
+    gap: 26px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .project-category-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-category-tabs button {
+    flex: 0 0 auto;
+  }
+
+  .project-filter-shell {
+    gap: 8px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .filter-scroll-button {
+    height: 36px;
+    width: 36px;
   }
 
   .about-selector {
