@@ -107,10 +107,12 @@ export function AboutSection({ about, aboutScreens, activeAbout, onSelectAbout }
       </div>
       <div className="lane-grid">
         {about.cards.map((lane) => (
-          <article key={lane.title}>
-            {lane.image ? <img src={lane.image} alt="" /> : <span className="about-placeholder" />}
-            <h4>{lane.title}</h4>
-          </article>
+          <Link className="about-card-link" key={lane.title} to={lane.href}>
+            <article>
+              {lane.image ? <img src={lane.image} alt="" /> : <span className="about-placeholder" />}
+              <h4>{lane.title}</h4>
+            </article>
+          </Link>
         ))}
       </div>
     </section>

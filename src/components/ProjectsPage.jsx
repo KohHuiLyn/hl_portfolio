@@ -1,9 +1,9 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ProjectCard } from './ProjectCard';
 
-const projectCategories = ['Development', 'Design', 'Creative'];
+const projectCategories = ['Development & Design', 'Creative'];
 
 const developmentTags = new Set([
   'Web Dev',
@@ -41,15 +41,17 @@ const creativeTags = new Set([
   'Game Design',
   'Teaching',
   'Sound Design',
+  'Logo',
+  'Asset Creation',
+  '3D Modelling',
+  '3D Animation',
+  'Blender',
+  'Computer Graphics',
 ]);
 
 function projectIsInCategory(project, category) {
-  if (category === 'Development') {
-    return project.tags.some((tag) => developmentTags.has(tag));
-  }
-
-  if (category === 'Design') {
-    return project.tags.some((tag) => designTags.has(tag));
+  if (category === 'Development & Design') {
+    return project.tags.some((tag) => developmentTags.has(tag) || designTags.has(tag));
   }
 
   if (category === 'Creative') {
@@ -59,10 +61,32 @@ function projectIsInCategory(project, category) {
   return false;
 }
 
+function tagIsInCategory(tag, category) {
+  if (category === 'Development & Design') {
+    return developmentTags.has(tag) || designTags.has(tag);
+  }
+
+  if (category === 'Creative') {
+    return creativeTags.has(tag);
+  }
+
+  return false;
+}
+
 export function ProjectsPage({ projects }) {
   const filterRowRef = useRef(null);
-  const [activeCategory, setActiveCategory] = useState('Development');
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [searchParams] = useSearchParams();
+  const requestedCategory = searchParams.get('category');
+  const requestedFilter = searchParams.get('filter');
+  const [activeCategory, setActiveCategory] = useState(
+    projectCategories.includes(requestedCategory) ? requestedCategory : 'Development & Design',
+  );
+  const [activeFilter, setActiveFilter] = useState(requestedFilter ?? 'All');
+
+  useEffect(() => {
+    setActiveCategory(projectCategories.includes(requestedCategory) ? requestedCategory : 'Development & Design');
+    setActiveFilter(requestedFilter ?? 'All');
+  }, [requestedCategory, requestedFilter]);
 
   const categoryProjects = useMemo(
     () => projects.filter((project) => projectIsInCategory(project, activeCategory)),
@@ -71,9 +95,13 @@ export function ProjectsPage({ projects }) {
 
   const filters = useMemo(() => {
     const counts = new Map();
-    categoryProjects.forEach((project) => project.tags.forEach((tag) => counts.set(tag, (counts.get(tag) ?? 0) + 1)));
+    categoryProjects.forEach((project) => project.tags.forEach((tag) => {
+      if (tagIsInCategory(tag, activeCategory)) {
+        counts.set(tag, (counts.get(tag) ?? 0) + 1);
+      }
+    }));
     return [['All', categoryProjects.length], ...counts.entries()];
-  }, [categoryProjects]);
+  }, [activeCategory, categoryProjects]);
 
   const visibleProjects = activeFilter === 'All'
     ? categoryProjects

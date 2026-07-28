@@ -15,7 +15,7 @@ export function VideoBlock({ title, body, url, src, accent = 'green' }) {
   const tiktokEmbedUrl = getTikTokEmbedUrl(url);
 
   return (
-    <section className={`case-section case-video accent-${accent}`}>
+    <section className={`case-section case-video${tiktokEmbedUrl ? ' is-tiktok' : ''} accent-${accent}`}>
       <h2>{title}</h2>
       <div className="case-video-frame">
         {embedUrl || tiktokEmbedUrl ? (

@@ -63,14 +63,15 @@ const aboutScreens = [
         <span className="key-underline"> intuitive</span> solutions.
       </>
     ),
-    skills: 'react, react native, next.js, nestjs, python, mysql',
+    skills: 'React, React Native, Next.js, NestJS, Python, MySQL',
     cards: [
       {
         title: 'Frontend & Mobile Development',
         image: '/assets/developer-cards/frontend & mobile development.png',
+        href: '/projects?category=Development+%26+Design',
       },
-      { title: 'Fullstack Systems', image: '/assets/developer-cards/Fullstack Systems.png' },
-      { title: 'AI Systems', image: '/assets/developer-cards/AI systems.png' },
+      { title: 'Fullstack Systems', image: '/assets/developer-cards/Fullstack Systems.png', href: '/projects?category=Development+%26+Design' },
+      { title: 'AI Systems', image: '/assets/developer-cards/AI systems.png', href: '/projects?category=Development+%26+Design&filter=Computer+Vision' },
     ],
   },
     {
@@ -84,11 +85,11 @@ const aboutScreens = [
         that people genuinely enjoy using.
       </>
     ),
-    skills: 'ui/ux, figma, photoshop, branding, design systems',
+    skills: 'UI/UX, Figma, Photoshop, Branding, Design Systems',
     cards: [
-      { title: 'Brand identity', image: '/assets/designer-cards/Brand Identity.png' },
-      { title: 'UI/UX & Design systems', image: '/assets/designer-cards/uiux.png' },
-      { title: 'Illustrations & Visual Design', image: '/assets/designer-cards/illustrations & visual design.png' },
+      { title: 'Logo', image: '/assets/designer-cards/Brand Identity.png', href: '/projects?category=Creative&filter=Logo' },
+      { title: 'UI/UX Design', image: '/assets/designer-cards/uiux.png', href: '/projects?category=Development+%26+Design&filter=UI%2FUX' },
+      { title: 'Illustrations & Visual Assets', image: '/assets/designer-cards/illustrations & visual design.png', href: '/projects?category=Creative&filter=Asset+Creation' },
     ],
   },
   {
@@ -105,9 +106,9 @@ const aboutScreens = [
     ),
     skills: 'Teaching, Curriculum Design, Problem Solving, Mentorship, Game Design',
     cards: [
-      { title: 'Teaching & Mentoring', image: '/assets/educator-cards/Teaching & Mentoring.png' },
-      { title: 'Curriculum Design', image: '/assets/educator-cards/Curriculum Design.png' },
-      { title: 'Workshops & Camps', image: '/assets/educator-cards/Workshops & Camps.png' },
+      { title: 'Teaching & Mentoring', image: '/assets/educator-cards/Teaching & Mentoring.png', href: '/projects/gameDesignCamp' },
+      { title: 'Curriculum Design', image: '/assets/educator-cards/Curriculum Design.png', href: '/projects/gameDesignCamp' },
+      { title: 'Workshops & Camps', image: '/assets/educator-cards/Workshops & Camps.png', href: '/projects/gameDesignCamp' },
     ],
   },
   {
@@ -124,9 +125,9 @@ const aboutScreens = [
     ),
     skills: 'Content Creation, Brand Building, Social Media Marketing, Storytelling, Video Editing',
     cards: [
-      { title: 'Jiakerz', image: '/assets/content-creation-cards/Jiakerz.png' },
-      { title: "Jiakerz's Branding & Identity", image: '/assets/content-creation-cards/Branding & Identity.png' },
-      { title: 'Content Production', image: '/assets/content-creation-cards/Content Production.png' },
+      { title: 'Jiakerz', image: '/assets/content-creation-cards/Jiakerz.png', href: '/projects/jiakerz' },
+      { title: "Jiakerz's Branding & Identity", image: '/assets/content-creation-cards/Branding & Identity.png', href: '/projects/jiakerz' },
+      { title: 'Content Production', image: '/assets/content-creation-cards/Content Production.png', href: '/projects/jiakerz' },
     ],
   },
 ];

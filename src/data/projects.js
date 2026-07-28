@@ -78,7 +78,7 @@ export const projects = [
   {
     id: 'adtro',
     title: 'Adtro',
-    tags: ['Web Dev', 'Mobile Dev', 'UI/UX', 'User Research', 'ReactJS', 'React Native', 'Next.js', 'Electron', 'Logo', 'Figma', 'Asset Creation'],
+    tags: ['Web Dev', 'Mobile Dev', 'UI/UX', 'User Research', 'Livestream Technology','ReactJS', 'React Native', 'Next.js', 'Electron', 'Logo', 'Figma', 'Asset Creation'],
     image: '/assets/projects/project-thumbnails/Adtro.png',
     accent: '#ee7041',
     description: 'Livestream commerce platform for multistreaming, product management, and business operations.',
@@ -93,7 +93,7 @@ export const projects = [
               title: 'Overview',
               accent: 'blue',
               body: [
-                'Adtro is a livestream commerce platform that enables creators and businesses to stream across YouTube, Facebook, and Instagram while managing products, audience engagement, and business operations from a single ecosystem.',
+                'Livestream sellers often have to juggle multiple devices, streaming software, comment sections, product lists and customer interactions simultaneously. Existing workflows required switching between different applications, making livestreaming difficult to manage efficiently. Adtro was built to consolidate livestreaming, product management, customer engagement and business operations into a single platform across web, mobile and desktop.',
                 'I contributed across the web portal, mobile application, desktop application, and information website, working on both UI/UX design and frontend development.',
               ],
             },
@@ -236,7 +236,7 @@ export const projects = [
             },
             {
               type: 'video',
-              title: 'Mobile Development Video',
+              title: 'User Journey (Mobile)',
               accent: 'green',
               src: '/assets/projects/adtro/mobile dev/adtro.mp4',
               body: 'This video showcases a user journey of a Livestreamer, where they go Live on Instagram and Youtube at the same time using Adtro\'s mobile app. They are able to receive and send out comments through Adtro.',
@@ -384,6 +384,49 @@ export const projects = [
     }),
   },
   {
+    id: 'blender-underwater-world',
+    title: '3D Modelling & Animation',
+    tags: ['Computer Graphics', '3D Modelling', '3D Animation', 'Blender', 'Asset Creation'],
+    image: '/assets/projects/blender/image_rendering_ver2.png',
+    accent: '#2f8fa3',
+    description: 'Computer graphics module projects exploring 3D modelling, environmental composition, rendering, and animation in Blender.',
+    caseStudy: {
+      sections: [
+        {
+          type: 'text',
+          title: 'Overview',
+          eyebrow: 'School Project',
+          body: 'Created for a Computer Graphics module, this project was my introduction to Blender modelling and animation. I had a fun time designing an underwater beach coral reef scene while learning how to model, texture, do light sources, render, and animate a complete 3D scene.',
+          accent: 'blue',
+        },
+        {
+          type: 'gallery',
+          title: 'Modelling & Rendering',
+          accent: 'green',
+          images: [
+            {
+              id: 'blender-render-v1',
+              src: '/assets/projects/blender/image_rendering_ver1.png',
+              alt: 'First rendered version of the Blender underwater environment with shark, coral, and beach models',
+            },
+            {
+              id: 'blender-render-v2',
+              src: '/assets/projects/blender/image_rendering_ver2.png',
+              alt: 'Second rendered version of the Blender underwater environment with shark, coral, and beach models',
+            },
+          ],
+        },
+        {
+          type: 'video',
+          title: 'Final Animation',
+          accent: 'orange',
+          url: 'https://youtu.be/eLN-XY1jOBE',
+          body: 'My group decided to do a parody of ZackDFilms as we decided our computers were too potato-ish to render more realistic scenes. We rigged the main character and did various particle effects for our short video. I editted the video using DaVinci Resolve.',
+        },
+      ],
+    },
+  },
+  {
     id: 'cooked-fever',
     title: 'Cooked Fever',
     tags: ['Game Design', 'Asset Creation','Sound Design', 'Java'],
@@ -405,7 +448,78 @@ export const projects = [
     image: '/assets/projects/project-thumbnails/Curriculum Design.png',
     accent: '#5f615f',
     description: 'I developed and taught a game design curriculum at LCCL Coding Academy, guiding students through the process of creating their own games like Planning, Pixel Art, Animation, Song composition, using accessible tools such as Piskel and Bandlab. The curriculum covered game mechanics, level design, asset creation, and sound design, culminating in a final project where students showcased their original game ideas. See more at: https://www.lcclcoding.com/holidays/game-design/',
-    caseStudy: { type: 'text', title: 'Overview', eyebrow: 'Project', body: 'I developed and taught a game design curriculum at LCCL Coding Academy, guiding students through the process of creating their own games like Planning, Pixel Art, Animation, Song composition, using accessible tools such as Piskel and Bandlab. The curriculum covered game mechanics, level design, asset creation, and sound design, culminating in a final project where students showcased their original game ideas.', accent: 'red' },
+    caseStudy: {
+      sections: [
+        {
+          type: 'text',
+          title: 'Overview',
+          eyebrow: 'Project',
+          body: 'I developed and taught a game design curriculum at LCCL Coding Academy, guiding students through planning, pixel art, animation, and song composition using accessible tools such as Piskel and BandLab. The curriculum covered game mechanics, level design, asset creation, and sound design, culminating in a final project where students showcased their original game ideas.',
+          accent: 'red',
+        },
+        {
+          type: 'embed',
+          title: 'Camp Slides',
+          url: 'https://www.canva.com/design/DAHHkMho1gE/HJ0Dh0E2Q-SbI_XVh5dxSA/view?embed',
+          linkUrl: 'https://www.canva.com/design/DAHHkMho1gE/HJ0Dh0E2Q-SbI_XVh5dxSA/view?utm_content=DAHHkMho1gE&utm_campaign=designshare&utm_medium=embeds&utm_source=link',
+
+          accent: 'blue',
+        },
+        {
+          type: 'quotes',
+          title: 'What Students Said',
+          accent: 'green',
+          quotes: [
+            {
+              id: 'student-feedback-1',
+              text: 'The course was awesome, and you are a great teacher! 😃',
+              author: 'A. R.',
+            },
+            {
+              id: 'student-feedback-2',
+              text: 'Thank you! I think I will definitely continue developing and pursuing game design. If you have any suggestions or feedback for the game I plan to create, please let me know, I am open to criticism d(^-^)',
+              author: 'E. C.',
+            },
+          ],
+        },
+        {
+          type: 'mediaShowcase',
+          title: 'Camp Photos',
+          accent: 'orange',
+          items: [
+            { id: 'camp-day-1', type: 'image', src: '/assets/projects/lccl_game_design/camp_photos/day1.JPG', alt: 'Students participating in day 1 of the game design camp', label: 'Day 1' },
+            { id: 'camp-day-2', type: 'image', src: '/assets/projects/lccl_game_design/camp_photos/day2.JPG', alt: 'Students participating in day 2 of the game design camp', label: 'Day 2' },
+            { id: 'camp-day-3', type: 'video', src: '/assets/projects/lccl_game_design/camp_photos/day3.mov', label: 'Day 3' },
+            { id: 'camp-day-4', type: 'video', src: '/assets/projects/lccl_game_design/camp_photos/day4.MOV', label: 'Day 4' },
+          ],
+        },
+        {
+          type: 'studentCreations',
+          title: 'What Students Have Created',
+          accent: 'green',
+          sprites: [
+            { id: 'student-sprite-1', src: '/assets/projects/lccl_game_design/gallery/students_works_sprites/1_sprite.gif', alt: 'Animated sprite created by a game design camp student', label: 'Student sprite 1' },
+            { id: 'student-sprite-2', src: '/assets/projects/lccl_game_design/gallery/students_works_sprites/2_sprite.gif', alt: 'Animated sprite created by a game design camp student', label: 'Student sprite 2' },
+          ],
+          tracks: [
+            {
+              id: 'main-ost',
+              src: '/assets/projects/lccl_game_design/gallery/students_works_music/3_mainost.wav',
+              cover: '/assets/projects/lccl_game_design/gallery/students_works_music/3_albumCover.png',
+              title: 'Main OST',
+              student: 'A. R.',
+            },
+            {
+              id: 'doctors-theme',
+              src: '/assets/projects/lccl_game_design/gallery/students_works_music/5_doctors_theme.wav',
+              cover: '/assets/projects/lccl_game_design/gallery/students_works_music/5_albumCover.png',
+              title: "Doctor's Theme",
+              student: 'L. C.',
+            },
+          ],
+        },
+      ],
+    },
 
   },
   {
@@ -454,15 +568,47 @@ export const projects = [
     tags: ['Content Creation','Storytelling', 'Asset Creation', 'Logo', 'Social Media'],
     image: '/assets/projects/jiakerz/Jiakerz.png',
     accent: '#5f615f',
-    description: 'Jiakerz is a food discovery content brand co-founded with a close friend to share restaurant reviews, recommendations, and food experiences through short-form content. Through collaborations with restaurants and cafes, we produced marketing reels, slideshows, and social media content that accumulated over 150,000 views and 14,000+ likes across platforms.',
-    caseStudy: galleryCaseStudy({
-      title: 'Jiakerz',
-      description: 'A food discovery content brand where I worked on content creation, visual identity, storytelling, and short-form social media engagement.',
-      images: ['/assets/projects/jiakerz/Jiakerz.png'],
-      videos: [{ title: 'TikTok Feature', url: 'https://www.tiktok.com/@jiakerz/photo/7576498775577922837?is_from_webapp=1&sender_device=pc&web_id=7642371294017029650', body: 'A Jiakerz TikTok feature.' }],
-      galleryTitle: 'Featured Work',
-      accent: 'red',
-    }),
+    description: 'Jiakerz is a food discovery content brand created with a close friend to share restaurant reviews, recommendations, and food experiences through short-form content. Through collaborations with restaurants and cafes, we produced marketing reels, slideshows, and social media content that accumulated over 150,000 views and 14,000+ likes across platforms.',
+    caseStudy: {
+      sections: [
+        {
+          type: 'text',
+          title: 'Overview',
+          eyebrow: 'Content Brand',
+          body: 'A food discovery content brand where I worked on content creation, visual identity, storytelling, and short-form social media engagement.',
+          accent: 'red',
+        },
+        {
+          type: 'tiktokShowcase',
+          title: 'Popular',
+          accent: 'green',
+          items: [
+            { id: 'jiakerz-popular-1', url: 'https://www.tiktok.com/@jiakerz/photo/7649655650615708948?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-popular-2', url: 'https://www.tiktok.com/@jiakerz/photo/7566868098792328469?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-popular-3', url: 'https://www.tiktok.com/@jiakerz/photo/7630781905020996884?is_from_webapp=1&sender_device=pc' },
+          ],
+        },
+        {
+          type: 'tiktokShowcase',
+          title: 'Brand Deals',
+          accent: 'orange',
+          items: [
+            { id: 'jiakerz-huevos', label: 'Huevos', url: 'https://www.tiktok.com/@jiakerz/photo/7660756017172483348?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-kream-korean', label: 'KREAM Korean', url: 'https://www.tiktok.com/@jiakerz/video/7647764741158374676?is_from_webapp=1&sender_device=pc&web_id=7659688294926452241' },
+            { id: 'jiakerz-wanglu-hotpot', label: 'Wanglu Hotpot', url: 'https://www.tiktok.com/@jiakerz/photo/7654822032575646997?is_from_webapp=1&sender_device=pc' },
+          ],
+        },
+        {
+          type: 'gallery',
+          title: 'Photos',
+          accent: 'red',
+          images: [
+            { id: 'jiakerz-photo-1', src: '/assets/projects/jiakerz/Jiakerz.png', alt: 'Jiakerz food content photo', variant: 'portrait' },
+            { id: 'jiakerz-photo-2', src: '/assets/projects/jiakerz/jiakerz2.jpg', alt: 'Jiakerz food content photo', variant: 'portrait' },
+          ],
+        },
+      ],
+    },
   },
   {
     id: 'third-eye',

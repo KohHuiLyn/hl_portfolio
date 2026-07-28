@@ -1,10 +1,15 @@
 import React from 'react';
+import { EmbedBlock } from './EmbedBlock';
 import { HighlightsCarousel } from './HighlightsCarousel';
 import { ImageGallery } from './ImageGallery';
 import { ImageTextBlock } from './ImageTextBlock';
 import { LongImageWithSidebar } from './LongImageWithSidebar';
+import { MediaShowcaseBlock } from './MediaShowcaseBlock';
+import { QuoteBlock } from './QuoteBlock';
 import { RoleBlock } from './RoleBlock';
+import { StudentCreationsBlock } from './StudentCreationsBlock';
 import { TextBlock } from './TextBlock';
+import { TikTokShowcaseBlock } from './TikTokShowcaseBlock';
 import { VideoBlock } from './VideoBlock';
 
 export function ProjectSectionRenderer({ sections = [], onImageClick }) {
@@ -18,6 +23,11 @@ export function ProjectSectionRenderer({ sections = [], onImageClick }) {
       case 'role': return <RoleBlock key={key} {...section} />;
       case 'gallery': return <ImageGallery key={key} {...section} onImageClick={onImageClick} />;
       case 'video': return <VideoBlock key={key} {...section} />;
+      case 'embed': return <EmbedBlock key={key} {...section} />;
+      case 'mediaShowcase': return <MediaShowcaseBlock key={key} {...section} />;
+      case 'studentCreations': return <StudentCreationsBlock key={key} {...section} />;
+      case 'quotes': return <QuoteBlock key={key} {...section} />;
+      case 'tiktokShowcase': return <TikTokShowcaseBlock key={key} {...section} />;
       default: return null;
     }
   });
