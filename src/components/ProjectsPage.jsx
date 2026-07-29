@@ -3,7 +3,8 @@ import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ProjectCard } from './ProjectCard';
 
-const projectCategories = ['Development & Design', 'Creative'];
+const projectCategories = ['UI/UX & Development', 'Creative'];
+const creativeOnlyProjectIds = new Set(['lccl-teaching', 'gameDesignCamp', 'littlebunchclub', 'jiakerz']);
 
 const developmentTags = new Set([
   'Web Dev',
@@ -50,7 +51,8 @@ const creativeTags = new Set([
 ]);
 
 function projectIsInCategory(project, category) {
-  if (category === 'Development & Design') {
+  if (category === 'UI/UX & Development') {
+    if (creativeOnlyProjectIds.has(project.id)) return false;
     return project.tags.some((tag) => developmentTags.has(tag) || designTags.has(tag));
   }
 
@@ -62,7 +64,7 @@ function projectIsInCategory(project, category) {
 }
 
 function tagIsInCategory(tag, category) {
-  if (category === 'Development & Design') {
+  if (category === 'UI/UX & Development') {
     return developmentTags.has(tag) || designTags.has(tag);
   }
 
@@ -79,12 +81,12 @@ export function ProjectsPage({ projects }) {
   const requestedCategory = searchParams.get('category');
   const requestedFilter = searchParams.get('filter');
   const [activeCategory, setActiveCategory] = useState(
-    projectCategories.includes(requestedCategory) ? requestedCategory : 'Development & Design',
+    projectCategories.includes(requestedCategory) ? requestedCategory : 'UI/UX & Development',
   );
   const [activeFilter, setActiveFilter] = useState(requestedFilter ?? 'All');
 
   useEffect(() => {
-    setActiveCategory(projectCategories.includes(requestedCategory) ? requestedCategory : 'Development & Design');
+    setActiveCategory(projectCategories.includes(requestedCategory) ? requestedCategory : 'UI/UX & Development');
     setActiveFilter(requestedFilter ?? 'All');
   }, [requestedCategory, requestedFilter]);
 

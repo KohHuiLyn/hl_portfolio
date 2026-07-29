@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export function StudentCreationsBlock({ title, sprites = [], tracks = [], accent = 'green' }) {
+export function StudentCreationsBlock({
+  title,
+  sprites = [],
+  tracks = [],
+  spriteTitle = 'Sprites',
+  musicTitle = 'Music',
+  accent = 'green',
+}) {
   const [activeTrackIndex, setActiveTrackIndex] = useState(0);
   const activeTrack = tracks[activeTrackIndex];
   const switchTrack = (direction) => {
@@ -12,20 +19,22 @@ export function StudentCreationsBlock({ title, sprites = [], tracks = [], accent
     <section className={`case-section case-student-creations accent-${accent}`}>
       {title && <h2>{title}</h2>}
 
-      <div className="case-creation-group">
-        <h3>Sprites</h3>
-        <div className="case-sprite-grid">
-          {sprites.map((sprite, index) => (
-            <figure className="case-sprite-card" key={sprite.id ?? sprite.src}>
-              <img src={sprite.src} alt={sprite.alt ?? `Student sprite ${index + 1}`} loading="lazy" />
-              <figcaption>{sprite.label ?? `Student sprite ${index + 1}`}</figcaption>
-            </figure>
-          ))}
+      {sprites.length > 0 && (
+        <div className="case-creation-group">
+          <h3>{spriteTitle}</h3>
+          <div className="case-sprite-grid">
+            {sprites.map((sprite, index) => (
+              <figure className="case-sprite-card" key={sprite.id ?? sprite.src}>
+                <img src={sprite.src} alt={sprite.alt ?? `Sprite ${index + 1}`} loading="lazy" />
+                <figcaption>{sprite.label ?? `Sprite ${index + 1}`}</figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="case-creation-group case-music-group">
-        <h3>Music</h3>
+      {tracks.length > 0 && <div className="case-creation-group case-music-group">
+        <h3>{musicTitle}</h3>
         {activeTrack && (
           <div className="case-track-carousel">
             <button type="button" aria-label="Previous song" onClick={() => switchTrack(-1)}>
@@ -61,7 +70,7 @@ export function StudentCreationsBlock({ title, sprites = [], tracks = [], accent
             ))}
           </div>
         )}
-      </div>
+      </div>}
     </section>
   );
 }

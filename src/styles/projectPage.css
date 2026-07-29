@@ -517,6 +517,24 @@
 .case-gallery-grid .case-media-mobile img { object-fit: contain; }
 .case-gallery-grid .case-media-portrait { aspect-ratio: 4 / 5; background: transparent; }
 .case-gallery-grid .case-media-portrait img { object-fit: contain; }
+.case-gallery-grid .case-media-pixelated img {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+.case-text-link {
+  border-bottom: 3px solid currentColor;
+  color: inherit;
+  display: inline-block;
+  font-size: var(--text-body);
+  font-weight: 800;
+  margin-top: 28px;
+  padding-bottom: 4px;
+  text-decoration: none;
+}
+.case-text-link:hover,
+.case-text-link:focus-visible {
+  color: var(--green);
+}
 
 .case-study-content { position: relative; }
 .case-study-content > .case-section:last-of-type { padding-bottom: clamp(132px, 13vw, 220px); }

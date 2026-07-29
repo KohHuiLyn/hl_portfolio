@@ -106,7 +106,7 @@ const aboutScreens = [
     ),
     skills: 'Teaching, Curriculum Design, Problem Solving, Mentorship, Game Design',
     cards: [
-      { title: 'Teaching & Mentoring', image: '/assets/educator-cards/Teaching & Mentoring.png', href: '/projects/gameDesignCamp' },
+      { title: 'Teaching & Mentoring', image: '/assets/educator-cards/Teaching & Mentoring.png', href: '/projects/lccl-teaching' },
       { title: 'Curriculum Design', image: '/assets/educator-cards/Curriculum Design.png', href: '/projects/gameDesignCamp' },
       { title: 'Workshops & Camps', image: '/assets/educator-cards/Workshops & Camps.png', href: '/projects/gameDesignCamp' },
     ],
@@ -158,7 +158,7 @@ const experiences = [
   {
     company: 'LCCL CODING ACADEMY',
     year: '2023-Present',
-    learnMore: '/projects/gameDesignCamp',
+    learnMore: '/projects/lccl-teaching',
     role: 'Senior Coding Instructor',
     tags: ['Teaching', 'Curriculum Design', 'Problem Solving', 'Scratch'],
     image: '/assets/jobs/lccl.png',

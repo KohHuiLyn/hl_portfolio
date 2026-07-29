@@ -345,8 +345,15 @@ export const projects = [
     caseStudy: {
       sections: [
         { type: 'text', title: 'Overview', eyebrow: 'Project', body: 'PostLoo is a restroom review app that uses computer vision gesture recognition to make rating public toilets faster and more accessible. I contributed to the UI/UX design, Mascot Animation and user research phases.', accent: 'blue' },
-        { type: 'video', title: 'Project Story', accent: 'green', url: 'https://www.youtube.com/watch?v=DmXfM5oUJ0c', body: 'Our journey making PostLoo from inspiration, to development, to final product showcasing the gesture-recognition rating flow.' },
+        { type: 'video', title: 'Project Story', accent: 'green', url: 'https://youtu.be/DmXfM5oUJ0c?t=28', body: 'Our journey making PostLoo from inspiration, to development, to final product showcasing the gesture-recognition rating flow.' },
         { type: 'video', title: 'Prototype Video', accent: 'blue', src: '/assets/projects/postloo/overview/20260409-0601-12.2969590.mp4', body: 'A emulated prototype recording of PostLoo simulating a user journey.' },
+        { type: 'gallery', title: 'Mascot Animations', accent: 'green', images: [
+          '/assets/projects/postloo/gallery/Untitled_Artwork.gif',
+          '/assets/projects/postloo/gallery/Untitled_Artwork 2.gif',
+          '/assets/projects/postloo/gallery/Untitled_Artwork 3.gif',
+          '/assets/projects/postloo/gallery/Untitled_Artwork 4.gif',
+          '/assets/projects/postloo/gallery/Untitled_Artwork 5.gif',
+        ].map((src, index) => ({ id: `postloo-animation-${index}`, src, alt: `PostLoo mascot animation ${index + 1}` })) },
         { type: 'gallery', title: 'Product Shots', accent: 'red', images: [
           '/assets/projects/postloo/gallery/photo_1_2026-06-20_14-49-58.jpg',
           '/assets/projects/postloo/gallery/photo_2_2026-06-20_14-49-58.jpg',
@@ -442,6 +449,56 @@ export const projects = [
     },
   },
   {
+    id: 'lccl-teaching',
+    title: 'Teaching at LCCL',
+    tags: ['Teaching', 'Scratch', 'ScratchJr', 'CodeSpark', 'Robotics', 'Curriculum Design'],
+    image: '/assets/projects/lccl_teaching/students1.png',
+    accent: '#5f615f',
+    description: 'Teaching coding and computational thinking to children aged 4–16 through Scratch, ScratchJr, CodeSpark, robotics, and hands-on creative projects.',
+    caseStudy: {
+      sections: [
+        {
+          type: 'text',
+          title: 'Overview',
+          eyebrow: 'Education',
+          accent: 'green',
+          body: [
+            'At LCCL Coding Academy, I teach children aged 4–16 using Scratch, ScratchJr, CodeSpark, and robotics.',
+            'I introduce programming concepts such as conditionals, loops, variables, events, sequencing, debugging, and computational thinking through visual, hands-on projects.',
+            'My lessons are adapted to each age group so younger learners can build confidence through play, while older students develop more complex games and interactive systems.',
+          ],
+        },
+        {
+          type: 'gallery',
+          title: 'Teaching & Mentoring',
+          accent: 'orange',
+          images: [
+            { id: 'lccl-students-1', src: '/assets/projects/lccl_teaching/students1.png', alt: 'Teaching and mentoring students at LCCL Coding Academy' },
+            { id: 'lccl-students-2', src: '/assets/projects/lccl_teaching/students2.png', alt: 'Students learning coding at LCCL Coding Academy' },
+          ],
+        },
+        {
+          type: 'gallery',
+          title: 'Student Scratch Projects',
+          accent: 'blue',
+          images: [
+            { id: 'lccl-scratch-1', src: '/assets/projects/lccl_teaching/scratch.jpg', alt: 'Scratch code and game created during an LCCL lesson' },
+            { id: 'lccl-scratch-2', src: '/assets/projects/lccl_teaching/scratch2.jpg', alt: 'Scratch programming project created during an LCCL lesson' },
+          ],
+        },
+        {
+          type: 'text',
+          title: 'Game Design Curriculum',
+          eyebrow: 'Curriculum Design',
+          accent: 'red',
+          body: 'I also designed and taught a dedicated game design curriculum covering planning, pixel art, animation, game mechanics, level design, and music composition.',
+          ctaLabel: 'View the Game Design Curriculum project →',
+          ctaHref: '/projects/gameDesignCamp',
+        },
+      ],
+    },
+  },
+  {
     id: 'gameDesignCamp',
     title: "LCCL Game Design Curriculum",
     tags: ['Game Design', 'Teaching','Asset Creation', 'Sound Design'],
@@ -473,12 +530,12 @@ export const projects = [
             {
               id: 'student-feedback-1',
               text: 'The course was awesome, and you are a great teacher! 😃',
-              author: 'A. R.',
+              author: 'A. R. (14 years old)',
             },
             {
               id: 'student-feedback-2',
               text: 'Thank you! I think I will definitely continue developing and pursuing game design. If you have any suggestions or feedback for the game I plan to create, please let me know, I am open to criticism d(^-^)',
-              author: 'E. C.',
+              author: 'E. C. (12 years old)',
             },
           ],
         },
@@ -498,8 +555,8 @@ export const projects = [
           title: 'What Students Have Created',
           accent: 'green',
           sprites: [
-            { id: 'student-sprite-1', src: '/assets/projects/lccl_game_design/gallery/students_works_sprites/1_sprite.gif', alt: 'Animated sprite created by a game design camp student', label: 'Student sprite 1' },
-            { id: 'student-sprite-2', src: '/assets/projects/lccl_game_design/gallery/students_works_sprites/2_sprite.gif', alt: 'Animated sprite created by a game design camp student', label: 'Student sprite 2' },
+            { id: 'student-sprite-1', src: '/assets/projects/lccl_game_design/gallery/students_works_sprites/1_sprite.gif', alt: 'Animated sprite created by a game design camp student', label: 'E. C. (12 years old)' },
+            { id: 'student-sprite-2', src: '/assets/projects/lccl_game_design/gallery/students_works_sprites/2_sprite.gif', alt: 'Animated sprite created by a game design camp student', label: 'C. T. (12 years old)' },
           ],
           tracks: [
             {
@@ -507,14 +564,14 @@ export const projects = [
               src: '/assets/projects/lccl_game_design/gallery/students_works_music/3_mainost.wav',
               cover: '/assets/projects/lccl_game_design/gallery/students_works_music/3_albumCover.png',
               title: 'Main OST',
-              student: 'A. R.',
+              student: 'A. R. (14 years old)',
             },
             {
               id: 'doctors-theme',
               src: '/assets/projects/lccl_game_design/gallery/students_works_music/5_doctors_theme.wav',
               cover: '/assets/projects/lccl_game_design/gallery/students_works_music/5_albumCover.png',
               title: "Doctor's Theme",
-              student: 'L. C.',
+              student: 'L. C. (13 years old)',
             },
           ],
         },
@@ -528,7 +585,78 @@ export const projects = [
     tags: ['Game Design', 'Asset Creation', 'Sound Design', 'Godot'],
     image: '/assets/projects/hex/hex.png',
     accent: '#5f615f',
-    description: 'A roguelike platformer where players control a witch navigating magical environments, built in Godot with custom game assets.',
+    description: 'Hex’s Adventure is a roguelike platformer I\'m currently building in Godot. I developed the game’s visual identity through original character art and sprite animation, while also exploring music and gameplay implementation.',
+    caseStudy: {
+      sections: [
+        {
+          type: 'text',
+          title: 'Overview',
+          eyebrow: 'Game Design',
+          accent: 'green',
+          body: 'Hex’s Adventure is a roguelike platformer I\'m currently building in Godot. I developed the game’s visual identity through original character art and sprite animation, while also exploring music and gameplay implementation.',
+        },
+        {
+          type: 'imageText',
+          title: 'Meet Hex',
+          accent: 'orange',
+          image: '/assets/projects/hex/hex_art.png',
+          alt: 'Character artwork of Hex, a witch holding a wooden staff',
+          imagePosition: 'right',
+          layout: 'fullHeight',
+          body: 'Hex is the game’s witch protagonist. I designed her character art, animations, and sprite sheets, giving her a "meh" kind of attitude. Throughout the game she gets stronger by collecting new spells.',
+        },
+        {
+          type: 'gallery',
+          title: 'Character Animation',
+          accent: 'red',
+          images: [
+            { id: 'hex-idle-animation', src: '/assets/projects/hex/hex-idle.gif', alt: 'Hex idle animation', variant: 'pixelated' },
+            { id: 'hex-run-animation', src: '/assets/projects/hex/hex-run.gif', alt: 'Hex running animation', variant: 'pixelated' },
+          ],
+        },
+        {
+          type: 'gallery',
+          title: 'Sprite Sheets',
+          accent: 'blue',
+          images: [
+            { id: 'hex-idle-sheet', src: '/assets/projects/hex/hex-idle-Sheet.png', alt: 'Hex idle animation sprite sheet', variant: 'pixelated' },
+            { id: 'hex-run-sheet', src: '/assets/projects/hex/hex-run-Sheet.png', alt: 'Hex running animation sprite sheet', variant: 'pixelated' },
+            { id: 'hex-block-run-sheet', src: '/assets/projects/hex/hex-block-run-Sheet.png', alt: 'Hex block and run animation sprite sheet', variant: 'pixelated' },
+          ],
+        },
+        {
+          type: 'mediaShowcase',
+          title: 'Testing',
+          accent: 'orange',
+          items: [
+            { id: 'hex-gameplay', type: 'video', src: '/assets/projects/hex/IMG_0614.MOV', label: 'Hex’s Adventure testing room as it\'s still being developed' },
+            { id: 'hex-gameplay-test-2', type: 'video', src: '/assets/projects/hex/unknown_2026.06.17-14.27.mp4', label: 'Hex’s animation test using blocked out shapes' },
+          ],
+        },
+        {
+          type: 'studentCreations',
+          title: 'Demo Soundtracks',
+          musicTitle: 'Tracks',
+          accent: 'green',
+          tracks: [
+            {
+              id: 'hex-swimming-with-the-stars',
+              src: '/assets/projects/hex/swimming with the stars.mp3',
+              cover: '/assets/projects/hex/hex_art.png',
+              title: 'Swimming with the Stars',
+              student: "Hex's Adventure",
+            },
+            {
+              id: 'hex-waltz',
+              src: '/assets/projects/hex/waltz.ogg',
+              cover: '/assets/projects/hex/hex_art.png',
+              title: 'Waltz',
+              student: "Hex's Adventure",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     id: 'littlebunchclub',
@@ -568,7 +696,7 @@ export const projects = [
     tags: ['Content Creation','Storytelling', 'Asset Creation', 'Logo', 'Social Media'],
     image: '/assets/projects/jiakerz/Jiakerz.png',
     accent: '#5f615f',
-    description: 'Jiakerz is a food discovery content brand created with a close friend to share restaurant reviews, recommendations, and food experiences through short-form content. Through collaborations with restaurants and cafes, we produced marketing reels, slideshows, and social media content that accumulated over 150,000 views and 14,000+ likes across platforms.',
+    description: 'Jiakerz is a food discovery content brand created with a close friend to share restaurant reviews, recommendations, and food experiences through short-form content. Through collaborations with restaurants and cafes, we produced marketing reels, slideshows, and social media content that accumulated over 20k+ likes across platforms.',
     caseStudy: {
       sections: [
         {

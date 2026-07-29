@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { OverviewStar } from './OverviewStar';
 
-export function TextBlock({ title, eyebrow, body, accent = 'blue' }) {
+export function TextBlock({ title, eyebrow, body, ctaLabel, ctaHref, accent = 'blue' }) {
   const paragraphs = Array.isArray(body) ? body : [body];
   const isOverview = title?.toLowerCase() === 'overview';
   return (
@@ -9,6 +10,7 @@ export function TextBlock({ title, eyebrow, body, accent = 'blue' }) {
       {eyebrow && !isOverview && <p className="case-eyebrow">{eyebrow}</p>}
       {title && (isOverview ? <div className="case-overview-heading"><OverviewStar /><h2>{title}</h2></div> : <h2>{title}</h2>)}
       <div className="case-body">{paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
+      {ctaLabel && ctaHref && <Link className="case-text-link" to={ctaHref}>{ctaLabel}</Link>}
     </section>
   );
 }
