@@ -157,8 +157,11 @@ export function EggRoom() {
   }, [currentDialogText, dialogOpen, displayedText]);
 
   useEffect(() => {
+    const musicAudio = audioRef.current;
     const textAudio = textAudioRef.current;
     if (!textAudio) return undefined;
+    if (musicAudio) musicAudio.volume = 0.8;
+    textAudio.volume = 0.8;
     const keepLooping = window.setInterval(() => {
       if (!textSoundActiveRef.current || !textAudio.paused) return;
       textAudio.currentTime = 0;
