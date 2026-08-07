@@ -66,12 +66,54 @@ export function EggRoom() {
   const displayedTextRef = useRef('');
   const manHasLeftRef = useRef(false);
   const audioRef = useRef(null);
-  const textAudioRef = useRef(null);
   const itemAudioRef = useRef(null);
+  const textAudioContextRef = useRef(null);
+  const textAudioBufferRef = useRef(null);
+  const textAudioGainRef = useRef(null);
+  const textAudioSourceRef = useRef(null);
+  const textAudioLoopRef = useRef({ start: 0, end: 0 });
   const textSoundActiveRef = useRef(false);
 
   const startMusic = () => {
     audioRef.current?.play().catch(() => {});
+    const textAudioContext = textAudioContextRef.current;
+    if (textAudioContext?.state === 'suspended') {
+      textAudioContext.resume().catch(() => {});
+    }
+  };
+
+  const stopTextSound = () => {
+    const source = textAudioSourceRef.current;
+    if (!source) return;
+    textAudioSourceRef.current = null;
+    source.onended = null;
+    try {
+      source.stop();
+    } catch {
+      // The source may already have stopped.
+    }
+    source.disconnect();
+  };
+
+  const startTextSound = () => {
+    const context = textAudioContextRef.current;
+    const buffer = textAudioBufferRef.current;
+    const gain = textAudioGainRef.current;
+    if (!context || !buffer || !gain || textAudioSourceRef.current) return;
+
+    if (context.state === 'suspended') context.resume().catch(() => {});
+    const source = context.createBufferSource();
+    const loop = textAudioLoopRef.current;
+    source.buffer = buffer;
+    source.loop = true;
+    source.loopStart = loop.start;
+    source.loopEnd = loop.end;
+    source.connect(gain);
+    source.onended = () => {
+      if (textAudioSourceRef.current === source) textAudioSourceRef.current = null;
+    };
+    textAudioSourceRef.current = source;
+    source.start(0, loop.start);
   };
 
   const skipDialogText = () => {
@@ -142,32 +184,87 @@ export function EggRoom() {
   }, [currentDialogText, dialogOpen, displayedText]);
 
   useEffect(() => {
-    const textAudio = textAudioRef.current;
-    if (!textAudio) return;
     const isTyping = dialogOpen && displayedText.length < currentDialogText.length;
     const isPunctuationPause = /[,.]$/.test(displayedText);
     const shouldPlayTextSound = isTyping && !isPunctuationPause;
     textSoundActiveRef.current = shouldPlayTextSound;
     if (shouldPlayTextSound) {
-      textAudio.play().catch(() => {});
+      startTextSound();
       return;
     }
-    textAudio.pause();
-    textAudio.currentTime = 0;
+    stopTextSound();
   }, [currentDialogText, dialogOpen, displayedText]);
 
   useEffect(() => {
     const musicAudio = audioRef.current;
-    const textAudio = textAudioRef.current;
-    if (!textAudio) return undefined;
-    if (musicAudio) musicAudio.volume = 0.8;
-    textAudio.volume = 0.2;
-    const keepLooping = window.setInterval(() => {
-      if (!textSoundActiveRef.current || !textAudio.paused) return;
-      textAudio.currentTime = 0;
-      textAudio.play().catch(() => {});
-    }, 50);
-    return () => window.clearInterval(keepLooping);
+    if (musicAudio) musicAudio.volume = 0.6;
+  }, []);
+
+  useEffect(() => {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return undefined;
+
+    const context = new AudioContextClass();
+    const gain = context.createGain();
+    const controller = new AbortController();
+    gain.gain.value = 1.2;
+    gain.connect(context.destination);
+    textAudioContextRef.current = context;
+    textAudioGainRef.current = gain;
+
+    fetch('/assets/egg-room/test.wav', { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Unable to load text sound: ${response.status}`);
+        return response.arrayBuffer();
+      })
+      .then((audioData) => context.decodeAudioData(audioData))
+      .then((buffer) => {
+        const threshold = 0.0005;
+        let firstAudibleSample = 0;
+        let lastAudibleSample = buffer.length - 1;
+        let foundFirst = false;
+
+        for (let sample = 0; sample < buffer.length && !foundFirst; sample += 1) {
+          for (let channel = 0; channel < buffer.numberOfChannels; channel += 1) {
+            if (Math.abs(buffer.getChannelData(channel)[sample]) >= threshold) {
+              firstAudibleSample = sample;
+              foundFirst = true;
+              break;
+            }
+          }
+        }
+
+        let foundLast = false;
+        for (let sample = buffer.length - 1; sample >= firstAudibleSample && !foundLast; sample -= 1) {
+          for (let channel = 0; channel < buffer.numberOfChannels; channel += 1) {
+            if (Math.abs(buffer.getChannelData(channel)[sample]) >= threshold) {
+              lastAudibleSample = sample;
+              foundLast = true;
+              break;
+            }
+          }
+        }
+
+        const padding = Math.round(buffer.sampleRate * 0.002);
+        textAudioLoopRef.current = {
+          start: Math.max(0, firstAudibleSample - padding) / buffer.sampleRate,
+          end: Math.min(buffer.length, lastAudibleSample + padding + 1) / buffer.sampleRate,
+        };
+        textAudioBufferRef.current = buffer;
+        if (textSoundActiveRef.current) startTextSound();
+      })
+      .catch((error) => {
+        if (!controller.signal.aborted) console.error(error);
+      });
+
+    return () => {
+      controller.abort();
+      stopTextSound();
+      textAudioBufferRef.current = null;
+      textAudioGainRef.current = null;
+      textAudioContextRef.current = null;
+      context.close().catch(() => {});
+    };
   }, []);
 
   useEffect(() => {
@@ -264,7 +361,6 @@ export function EggRoom() {
   return (
     <main className="egg-page" aria-label="The Egg Room">
       <audio ref={audioRef} src="/assets/egg-room/egg.mp3" loop preload="auto" />
-      <audio ref={textAudioRef} src="/assets/egg-room/test.mp3" loop preload="auto" />
       <audio ref={itemAudioRef} src="/assets/egg-room/snd_item.wav" preload="auto" />
       <div className="egg-world-wrap">
         <div className="egg-world" style={{ '--world-width': WORLD.width, '--world-height': WORLD.height }}>
