@@ -1,0 +1,204 @@
+.egg-room-body {
+  background: #000;
+  overflow: hidden;
+  padding: 0;
+}
+
+@font-face {
+  font-family: Determination;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/determination.ttf') format('truetype');
+}
+
+.egg-page {
+  --room-purple: #642f6b;
+  align-items: center;
+  background: #000;
+  display: flex;
+  height: 100dvh;
+  justify-content: center;
+  min-height: 420px;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+}
+
+.egg-world-wrap {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  position: relative;
+  width: min(100vw, 800px, calc(100dvh * 4 / 3));
+}
+
+.egg-world {
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.egg-floor {
+  background: var(--room-purple);
+  clip-path: polygon(33.75% 24%, 66.25% 24%, 66.25% 32%, 73% 32%, 73% 58.5%, 66.25% 58.5%, 66.25% 67.5%, 59.6% 67.5%, 59.6% 100%, 40.4% 100%, 40.4% 67.5%, 33.75% 67.5%, 33.75% 58.5%, 27% 58.5%, 27% 32%, 33.75% 32%);
+  inset: 0;
+  position: absolute;
+}
+
+.egg-tree {
+  height: auto;
+  image-rendering: pixelated;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 14%;
+  transform: translateX(-50%);
+  width: 30%;
+  z-index: 2;
+}
+
+.egg-player {
+  height: clamp(70px, 16%, 96px);
+  pointer-events: none;
+  position: absolute;
+  transform: translate(-50%, -86%);
+  width: clamp(33px, 6%, 46px);
+  z-index: 3;
+}
+
+.egg-player.is-behind-tree {
+  z-index: 1;
+}
+
+.egg-player img {
+  height: 100%;
+  image-rendering: pixelated;
+  max-width: none;
+  object-fit: fill;
+  width: 100%;
+}
+
+.egg-hint {
+  bottom: 18px;
+  color: #805783;
+  font-family: monospace;
+  font-size: 11px;
+  left: 50%;
+  letter-spacing: 0.16em;
+  margin: 0;
+  opacity: 0;
+  position: fixed;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  animation: egg-hint 4s ease 0.7s both;
+}
+
+.egg-dialog {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  bottom: clamp(18px, 4vh, 42px);
+  cursor: pointer;
+  left: 50%;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  transform: translateX(-50%);
+  width: min(92vw, 700px);
+  z-index: 10;
+}
+
+.egg-dialog img {
+  image-rendering: pixelated;
+  width: 100%;
+}
+
+.egg-dialog span {
+  color: #fff;
+  font-family: Determination, monospace;
+  font-size: clamp(17px, 2.8vw, 28px);
+  font-weight: 400;
+  left: 6.3%;
+  line-height: 1.42;
+  overflow-wrap: break-word;
+  position: absolute;
+  right: 6.3%;
+  text-align: left;
+  text-shadow: 2px 0 #24234a;
+  top: 21%;
+  white-space: normal;
+}
+
+@keyframes egg-hint {
+  0%, 100% { opacity: 0; }
+  20%, 72% { opacity: 0.75; }
+}
+
+.egg-controls {
+  bottom: 16px;
+  display: none;
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(2, 44px);
+  left: 16px;
+  position: fixed;
+  z-index: 5;
+}
+
+.egg-controls button,
+.egg-actions button {
+  background: rgba(100, 47, 107, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.65);
+  font: 16px monospace;
+  padding: 0;
+  touch-action: none;
+}
+
+.egg-actions {
+  bottom: 16px;
+  display: none;
+  gap: 12px;
+  position: fixed;
+  right: 16px;
+  z-index: 12;
+}
+
+.egg-actions button {
+  border-radius: 50%;
+  font-weight: 700;
+  height: 52px;
+  width: 52px;
+}
+
+.egg-controls button:nth-child(1) { grid-column: 2; }
+.egg-controls button:nth-child(2) { grid-column: 1; grid-row: 2; }
+.egg-controls button:nth-child(3) { grid-column: 2; grid-row: 2; }
+.egg-controls button:nth-child(4) { grid-column: 3; grid-row: 2; }
+
+@media (pointer: coarse), (max-width: 600px) {
+  .egg-player {
+    height: clamp(40px, 9%, 55px);
+    width: clamp(19px, 3.5%, 27px);
+  }
+
+  .egg-controls { display: grid; }
+  .egg-actions { display: flex; }
+  .egg-hint { display: none; }
+}
+
+@media (max-width: 520px) {
+  .egg-dialog span {
+    font-size: clamp(14px, 4.2vw, 20px);
+    left: 5.5%;
+    right: 5.5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .egg-hint { animation: none; }
+}

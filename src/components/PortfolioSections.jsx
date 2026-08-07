@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { SiTiktok } from 'react-icons/si';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ProjectCard } from './ProjectCard';
 
 export function Header({ LogoStar, navLinks }) {
@@ -147,7 +147,29 @@ export function ExperienceSection({ current, experiences, activeExperience, onMo
 }
 
 export function ContactSection({ opportunities, CardStar }) {
-  const [spinningStar, setSpinningStar] = useState(null);
+  const navigate = useNavigate();
+  const [spinningStars, setSpinningStars] = useState(() => new Set());
+  const discoveryRef = useRef({ startedAt: 0, stars: new Set() });
+  const discoveryTimerRef = useRef(null);
+
+  useEffect(() => () => window.clearTimeout(discoveryTimerRef.current), []);
+
+  const spinStar = (title) => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      setSpinningStars((current) => new Set(current).add(title));
+    }
+
+    const now = performance.now();
+    if (!discoveryRef.current.startedAt || now - discoveryRef.current.startedAt > 2200) {
+      discoveryRef.current = { startedAt: now, stars: new Set() };
+    }
+    discoveryRef.current.stars.add(title);
+
+    if (discoveryRef.current.stars.size === opportunities.length && !discoveryTimerRef.current) {
+      discoveryTimerRef.current = window.setTimeout(() => navigate('/egg'), prefersReducedMotion ? 0 : 650);
+    }
+  };
 
   return (
     <section id="contact" className="contact-section section-pad">
@@ -159,14 +181,16 @@ export function ContactSection({ opportunities, CardStar }) {
               className="opportunity-star-button"
               type="button"
               aria-label={`Spin ${item.title} star`}
-              onClick={() => {
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-                setSpinningStar(null);
-                requestAnimationFrame(() => setSpinningStar(item.title));
+              onClick={() => spinStar(item.title)}
+              onAnimationEnd={() => {
+                setSpinningStars((current) => {
+                  const next = new Set(current);
+                  next.delete(item.title);
+                  return next;
+                });
               }}
-              onAnimationEnd={() => setSpinningStar(null)}
             >
-              <CardStar className={`opportunity-star ${spinningStar === item.title ? 'is-spinning' : ''}`} color={item.color} />
+              <CardStar className={`opportunity-star ${spinningStars.has(item.title) ? 'is-spinning' : ''}`} color={item.color} />
             </button>
             <h3>{item.title}</h3><p>{item.copy}</p>
           </article>

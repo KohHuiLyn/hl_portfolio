@@ -14,6 +14,7 @@ import {
 } from './components/PortfolioSections';
 import { ProjectsPage } from './components/ProjectsPage';
 import { ProjectPage } from './pages/ProjectPage';
+import { EggRoom } from './pages/EggRoom';
 import { projects, recentProjectRows } from './data/projects';
 import './styles.css';
 
@@ -350,8 +351,13 @@ function App() {
   );
 }
 
+function SiteRoot() {
+  const { pathname } = useLocation();
+  return pathname === '/egg' || pathname === '/egg/' ? <EggRoom /> : <App />;
+}
+
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <App />
+    <SiteRoot />
   </BrowserRouter>,
 );
