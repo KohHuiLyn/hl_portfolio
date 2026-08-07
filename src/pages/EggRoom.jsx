@@ -67,53 +67,174 @@ export function EggRoom() {
   const manHasLeftRef = useRef(false);
   const audioRef = useRef(null);
   const itemAudioRef = useRef(null);
+  const textAudioDataRef = useRef(null);
   const textAudioContextRef = useRef(null);
   const textAudioBufferRef = useRef(null);
+  const textAudioDecodePromiseRef = useRef(null);
   const textAudioGainRef = useRef(null);
   const textAudioSourceRef = useRef(null);
   const textAudioLoopRef = useRef({ start: 0, end: 0 });
+  const textAudioSuspendTimerRef = useRef(null);
   const textSoundActiveRef = useRef(false);
 
-  const startMusic = () => {
-    audioRef.current?.play().catch(() => {});
-    const textAudioContext = textAudioContextRef.current;
-    if (textAudioContext?.state === 'suspended') {
-      textAudioContext.resume().catch(() => {});
-    }
+  const clearTextAudioSuspendTimer = () => {
+    if (textAudioSuspendTimerRef.current === null) return;
+    window.clearTimeout(textAudioSuspendTimerRef.current);
+    textAudioSuspendTimerRef.current = null;
   };
 
-  const stopTextSound = () => {
+  const suspendTextAudioContext = () => {
+    clearTextAudioSuspendTimer();
+    const context = textAudioContextRef.current;
+    if (context?.state === 'running') context.suspend().catch(() => {});
+  };
+
+  const scheduleTextAudioSuspend = () => {
+    clearTextAudioSuspendTimer();
+    textAudioSuspendTimerRef.current = window.setTimeout(() => {
+      textAudioSuspendTimerRef.current = null;
+      if (!textSoundActiveRef.current && !textAudioSourceRef.current) suspendTextAudioContext();
+    }, 750);
+  };
+
+  const stopTextSound = (scheduleSuspend = true) => {
     const source = textAudioSourceRef.current;
-    if (!source) return;
-    textAudioSourceRef.current = null;
-    source.onended = null;
-    try {
-      source.stop();
-    } catch {
-      // The source may already have stopped.
+    if (source) {
+      textAudioSourceRef.current = null;
+      source.onended = null;
+      try {
+        source.stop();
+      } catch {
+        // The source may already have stopped.
+      }
+      source.disconnect();
     }
-    source.disconnect();
+    if (scheduleSuspend) scheduleTextAudioSuspend();
   };
 
   const startTextSound = () => {
+    if (!textSoundActiveRef.current) return;
+    clearTextAudioSuspendTimer();
     const context = textAudioContextRef.current;
     const buffer = textAudioBufferRef.current;
     const gain = textAudioGainRef.current;
     if (!context || !buffer || !gain || textAudioSourceRef.current) return;
 
-    if (context.state === 'suspended') context.resume().catch(() => {});
-    const source = context.createBufferSource();
-    const loop = textAudioLoopRef.current;
-    source.buffer = buffer;
-    source.loop = true;
-    source.loopStart = loop.start;
-    source.loopEnd = loop.end;
-    source.connect(gain);
-    source.onended = () => {
-      if (textAudioSourceRef.current === source) textAudioSourceRef.current = null;
+    const beginPlayback = () => {
+      if (
+        !textSoundActiveRef.current
+        || textAudioContextRef.current !== context
+        || textAudioSourceRef.current
+      ) return;
+      const source = context.createBufferSource();
+      const loop = textAudioLoopRef.current;
+      source.buffer = buffer;
+      source.loop = true;
+      source.loopStart = loop.start;
+      source.loopEnd = loop.end;
+      source.connect(gain);
+      source.onended = () => {
+        if (textAudioSourceRef.current === source) textAudioSourceRef.current = null;
+      };
+      textAudioSourceRef.current = source;
+      source.start(0, loop.start);
     };
-    textAudioSourceRef.current = source;
-    source.start(0, loop.start);
+
+    if (context.state === 'running') {
+      beginPlayback();
+      return;
+    }
+    if (context.state === 'suspended' || context.state === 'interrupted') {
+      context.resume().then(beginPlayback).catch(() => {});
+    }
+  };
+
+  const decodeTextAudio = (context) => {
+    if (
+      !textAudioDataRef.current
+      || textAudioBufferRef.current
+      || textAudioDecodePromiseRef.current
+    ) return;
+
+    const decodePromise = context.decodeAudioData(textAudioDataRef.current.slice(0))
+      .then((buffer) => {
+        if (textAudioContextRef.current !== context) return;
+        const threshold = 0.0005;
+        const channels = Array.from(
+          { length: buffer.numberOfChannels },
+          (_, channel) => buffer.getChannelData(channel),
+        );
+        let firstAudibleSample = 0;
+        let lastAudibleSample = buffer.length - 1;
+        let foundFirst = false;
+
+        for (let sample = 0; sample < buffer.length && !foundFirst; sample += 1) {
+          if (channels.some((channel) => Math.abs(channel[sample]) >= threshold)) {
+            firstAudibleSample = sample;
+            foundFirst = true;
+          }
+        }
+
+        let foundLast = false;
+        for (let sample = buffer.length - 1; sample >= firstAudibleSample && !foundLast; sample -= 1) {
+          if (channels.some((channel) => Math.abs(channel[sample]) >= threshold)) {
+            lastAudibleSample = sample;
+            foundLast = true;
+          }
+        }
+
+        const padding = Math.round(buffer.sampleRate * 0.002);
+        textAudioLoopRef.current = {
+          start: Math.max(0, firstAudibleSample - padding) / buffer.sampleRate,
+          end: Math.min(buffer.length, lastAudibleSample + padding + 1) / buffer.sampleRate,
+        };
+        textAudioBufferRef.current = buffer;
+        if (textSoundActiveRef.current) startTextSound();
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        if (textAudioDecodePromiseRef.current === decodePromise) {
+          textAudioDecodePromiseRef.current = null;
+        }
+      });
+    textAudioDecodePromiseRef.current = decodePromise;
+  };
+
+  const unlockTextAudio = () => {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    clearTextAudioSuspendTimer();
+    let context = textAudioContextRef.current;
+    if (!context || context.state === 'closed') {
+      context = new AudioContextClass();
+      const gain = context.createGain();
+      gain.gain.value = 1.2;
+      gain.connect(context.destination);
+      textAudioContextRef.current = context;
+      textAudioGainRef.current = gain;
+      textAudioBufferRef.current = null;
+      textAudioDecodePromiseRef.current = null;
+    }
+
+    // Starting a silent buffer within the gesture reliably unlocks Web Audio on iOS Safari.
+    const silentSource = context.createBufferSource();
+    silentSource.buffer = context.createBuffer(1, 1, 22050);
+    silentSource.connect(context.destination);
+    silentSource.start(0);
+    decodeTextAudio(context);
+
+    const afterResume = () => {
+      if (textSoundActiveRef.current) startTextSound();
+      else scheduleTextAudioSuspend();
+    };
+    if (context.state === 'running') afterResume();
+    else context.resume().then(afterResume).catch(() => {});
+  };
+
+  const startMusic = () => {
+    audioRef.current?.play().catch(() => {});
+    unlockTextAudio();
   };
 
   const skipDialogText = () => {
@@ -201,57 +322,16 @@ export function EggRoom() {
   }, []);
 
   useEffect(() => {
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) return undefined;
-
-    const context = new AudioContextClass();
-    const gain = context.createGain();
     const controller = new AbortController();
-    gain.gain.value = 1.2;
-    gain.connect(context.destination);
-    textAudioContextRef.current = context;
-    textAudioGainRef.current = gain;
-
     fetch('/assets/egg-room/test.wav', { signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error(`Unable to load text sound: ${response.status}`);
         return response.arrayBuffer();
       })
-      .then((audioData) => context.decodeAudioData(audioData))
-      .then((buffer) => {
-        const threshold = 0.0005;
-        let firstAudibleSample = 0;
-        let lastAudibleSample = buffer.length - 1;
-        let foundFirst = false;
-
-        for (let sample = 0; sample < buffer.length && !foundFirst; sample += 1) {
-          for (let channel = 0; channel < buffer.numberOfChannels; channel += 1) {
-            if (Math.abs(buffer.getChannelData(channel)[sample]) >= threshold) {
-              firstAudibleSample = sample;
-              foundFirst = true;
-              break;
-            }
-          }
-        }
-
-        let foundLast = false;
-        for (let sample = buffer.length - 1; sample >= firstAudibleSample && !foundLast; sample -= 1) {
-          for (let channel = 0; channel < buffer.numberOfChannels; channel += 1) {
-            if (Math.abs(buffer.getChannelData(channel)[sample]) >= threshold) {
-              lastAudibleSample = sample;
-              foundLast = true;
-              break;
-            }
-          }
-        }
-
-        const padding = Math.round(buffer.sampleRate * 0.002);
-        textAudioLoopRef.current = {
-          start: Math.max(0, firstAudibleSample - padding) / buffer.sampleRate,
-          end: Math.min(buffer.length, lastAudibleSample + padding + 1) / buffer.sampleRate,
-        };
-        textAudioBufferRef.current = buffer;
-        if (textSoundActiveRef.current) startTextSound();
+      .then((audioData) => {
+        textAudioDataRef.current = audioData;
+        const context = textAudioContextRef.current;
+        if (context && context.state !== 'closed') decodeTextAudio(context);
       })
       .catch((error) => {
         if (!controller.signal.aborted) console.error(error);
@@ -259,12 +339,33 @@ export function EggRoom() {
 
     return () => {
       controller.abort();
-      stopTextSound();
+      clearTextAudioSuspendTimer();
+      stopTextSound(false);
+      const context = textAudioContextRef.current;
+      textAudioDataRef.current = null;
       textAudioBufferRef.current = null;
+      textAudioDecodePromiseRef.current = null;
       textAudioGainRef.current = null;
       textAudioContextRef.current = null;
-      context.close().catch(() => {});
+      if (context && context.state !== 'closed') context.close().catch(() => {});
     };
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const context = textAudioContextRef.current;
+      if (!context) return;
+      if (document.visibilityState === 'hidden') {
+        clearTextAudioSuspendTimer();
+        stopTextSound(false);
+        if (context.state === 'running') context.suspend().catch(() => {});
+        return;
+      }
+      if (textSoundActiveRef.current) startTextSound();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
   useEffect(() => {
@@ -356,6 +457,7 @@ export function EggRoom() {
   const stopTouch = (event) => {
     event.preventDefault();
     touchDirection.current = null;
+    if (event.type === 'pointerup') startMusic();
   };
 
   return (
@@ -390,8 +492,8 @@ export function EggRoom() {
         <button onPointerDown={startTouch(DIRECTIONS.ArrowRight)} onPointerUp={stopTouch} onPointerCancel={stopTouch} aria-label="Move right">▶</button>
       </div>
       <div className="egg-actions" aria-label="Action controls">
-        <button onPointerDown={(event) => { event.preventDefault(); skipDialogText(); }} aria-label="Finish dialogue text">X</button>
-        <button onPointerDown={(event) => { event.preventDefault(); interact(); }} aria-label="Interact">Z</button>
+        <button onClick={() => { startMusic(); skipDialogText(); }} aria-label="Finish dialogue text">X</button>
+        <button onClick={interact} aria-label="Interact">Z</button>
       </div>
     </main>
   );
