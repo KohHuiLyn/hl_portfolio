@@ -6,6 +6,9 @@ const WORLD = { width: 800, height: 600 };
 const START = { x: 400, y: 555 };
 const EXIT_Y = 570;
 const TREE_DEPTH_Y = 292;
+const SEAL_POSITION = { x: 535, y: 320 };
+const EGG_COOKIE_NAME = 'egg';
+const EGG_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 const FRONT_TREE_DIALOG = ['* There is a man behind the tree.'];
 const EGG_RECEIVED_DIALOG_INDEX = 2;
 const BEHIND_TREE_DIALOG = [
@@ -18,7 +21,10 @@ const BEHIND_TREE_DIALOG = [
   '* interesting...',
   '* He waves goodbye.',
 ];
-const MAN_GONE_DIALOG = ['* Was there once a man?'];
+const MAN_GONE_DIALOG = ['* A lonely tree stands here.'];
+const SEAL_DIALOG = ['* do u haf projects 4 me...', '* ples projects'];
+const INTERACT_KEYS = new Set(['KeyZ', 'Enter', 'NumpadEnter']);
+const SKIP_KEYS = new Set(['KeyX', 'ShiftLeft', 'ShiftRight']);
 const DIRECTIONS = {
   ArrowUp: [0, -1, 'up'],
   KeyW: [0, -1, 'up'],
@@ -30,13 +36,16 @@ const DIRECTIONS = {
   KeyD: [1, 0, 'right'],
 };
 
-function canStand(x, y) {
+function canStand(x, y, hasEgg = false) {
   const inCorridor = x >= 323 && x <= 477 && y >= 398 && y <= 590;
   const inLowerStep = x >= 270 && x <= 530 && y >= 350 && y <= 405;
   const inMainRoom = x >= 217 && x <= 583 && y >= 192 && y <= 350;
   const inUpperStep = x >= 270 && x <= 530 && y >= 145 && y <= 192;
   const treeTrunk = x >= 330 && x <= 470 && y >= 135 && y <= 292;
-  return (inCorridor || inLowerStep || inMainRoom || inUpperStep) && !treeTrunk;
+  const sealBody = hasEgg
+    && Math.abs(x - SEAL_POSITION.x) <= 28
+    && Math.abs(y - SEAL_POSITION.y) <= 24;
+  return (inCorridor || inLowerStep || inMainRoom || inUpperStep) && !treeTrunk && !sealBody;
 }
 
 function getTreeDialog(x, y, manHasLeft) {
@@ -45,6 +54,24 @@ function getTreeDialog(x, y, manHasLeft) {
   if (y >= TREE_DEPTH_Y && y <= 395) return FRONT_TREE_DIALOG;
   if (y >= 145 && y < TREE_DEPTH_Y) return BEHIND_TREE_DIALOG;
   return null;
+}
+
+function getSealDialog(x, y, hasEgg) {
+  if (!hasEgg) return null;
+  return Math.hypot(x - SEAL_POSITION.x, y - SEAL_POSITION.y) <= 82
+    ? SEAL_DIALOG
+    : null;
+}
+
+function hasStoredEgg() {
+  if (typeof document === 'undefined') return false;
+  return document.cookie
+    .split(';')
+    .some((cookie) => cookie.trim() === `${EGG_COOKIE_NAME}=1`);
+}
+
+function storeEgg() {
+  document.cookie = `${EGG_COOKIE_NAME}=1; Max-Age=${EGG_COOKIE_MAX_AGE}; Path=/; SameSite=Lax`;
 }
 
 export function EggRoom() {
@@ -57,6 +84,7 @@ export function EggRoom() {
   const [dialogLines, setDialogLines] = useState([]);
   const [dialogIndex, setDialogIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
+  const [hasEgg] = useState(hasStoredEgg);
   const keys = useRef(new Set());
   const touchDirection = useRef(null);
   const positionRef = useRef(START);
@@ -64,7 +92,8 @@ export function EggRoom() {
   const dialogLinesRef = useRef([]);
   const dialogIndexRef = useRef(0);
   const displayedTextRef = useRef('');
-  const manHasLeftRef = useRef(false);
+  const hasEggRef = useRef(hasEgg);
+  const manHasLeftRef = useRef(hasEgg);
   const audioRef = useRef(null);
   const itemAudioRef = useRef(null);
   const textAudioDataRef = useRef(null);
@@ -258,6 +287,7 @@ export function EggRoom() {
       if (index < lines.length - 1) {
         const nextIndex = index + 1;
         if (lines === BEHIND_TREE_DIALOG && nextIndex === EGG_RECEIVED_DIALOG_INDEX) {
+          storeEgg();
           const itemAudio = itemAudioRef.current;
           if (itemAudio) {
             itemAudio.currentTime = 0;
@@ -276,7 +306,8 @@ export function EggRoom() {
       return;
     }
     const { x, y } = positionRef.current;
-    const lines = getTreeDialog(x, y, manHasLeftRef.current);
+    const lines = getSealDialog(x, y, hasEggRef.current)
+      ?? getTreeDialog(x, y, manHasLeftRef.current);
     if (lines) {
       keys.current.clear();
       dialogOpenRef.current = true;
@@ -291,6 +322,13 @@ export function EggRoom() {
   };
 
   const currentDialogText = dialogLines[dialogIndex] ?? '';
+  const sealIsSpeaking = dialogOpen
+    && dialogLines === SEAL_DIALOG
+    && displayedText.length < currentDialogText.length
+    && !/[,.]$/.test(displayedText);
+  const sealSprite = sealIsSpeaking && Math.floor(displayedText.length / 2) % 2 === 1
+    ? '/assets/egg-room/seal2.png'
+    : '/assets/egg-room/seal1.png';
 
   useEffect(() => {
     if (!dialogOpen || displayedText.length >= currentDialogText.length) return undefined;
@@ -375,12 +413,12 @@ export function EggRoom() {
 
   useEffect(() => {
     const keyDown = (event) => {
-      if (event.code === 'KeyX' && dialogOpenRef.current) {
+      if (SKIP_KEYS.has(event.code) && dialogOpenRef.current) {
         event.preventDefault();
         skipDialogText();
         return;
       }
-      if (event.code === 'KeyZ') {
+      if (INTERACT_KEYS.has(event.code)) {
         event.preventDefault();
         if (!event.repeat) interact();
         return;
@@ -434,8 +472,8 @@ export function EggRoom() {
         setPosition((current) => {
           let x = current.x;
           let y = current.y;
-          if (canStand(x + dx * distance, y)) x += dx * distance;
-          if (canStand(x, y + dy * distance)) y += dy * distance;
+          if (canStand(x + dx * distance, y, hasEggRef.current)) x += dx * distance;
+          if (canStand(x, y + dy * distance, hasEggRef.current)) y += dy * distance;
           const next = { x, y };
           positionRef.current = next;
           return next;
@@ -468,8 +506,20 @@ export function EggRoom() {
         <div className="egg-world" style={{ '--world-width': WORLD.width, '--world-height': WORLD.height }}>
           <div className="egg-floor" />
           <img className="egg-tree" src="/assets/egg-room/tree.gif" alt="A strange red tree" draggable="false" />
+          {hasEgg && (
+            <img
+              className="egg-seal"
+              src={sealSprite}
+              alt="A small seal"
+              draggable="false"
+              style={{
+                left: `${(SEAL_POSITION.x / WORLD.width) * 100}%`,
+                top: `${(SEAL_POSITION.y / WORLD.height) * 100}%`,
+              }}
+            />
+          )}
           <div
-            className={`egg-player ${moving ? 'is-moving' : ''} ${position.y < TREE_DEPTH_Y ? 'is-behind-tree' : ''}`}
+            className={`egg-player ${moving ? 'is-moving' : ''} ${position.y < TREE_DEPTH_Y ? 'is-behind-tree' : ''} ${hasEgg && position.y >= TREE_DEPTH_Y && position.y < SEAL_POSITION.y ? 'is-behind-seal' : ''}`}
             style={{ left: `${(position.x / WORLD.width) * 100}%`, top: `${(position.y / WORLD.height) * 100}%` }}
           >
             <img src={`/assets/egg-room/kris-walk/${facing}-${walkFrame}.png`} alt="Kris" draggable="false" />
@@ -484,7 +534,7 @@ export function EggRoom() {
         </button>
       )}
 
-      <p className="egg-hint">arrow keys / wasd&nbsp;&nbsp;·&nbsp;&nbsp;z: interact</p>
+      <p className="egg-hint">arrows / wasd · z / enter: interact · x / shift: skip</p>
       <div className="egg-controls" aria-label="Movement controls">
         <button onPointerDown={startTouch(DIRECTIONS.ArrowUp)} onPointerUp={stopTouch} onPointerCancel={stopTouch} aria-label="Move up">▲</button>
         <button onPointerDown={startTouch(DIRECTIONS.ArrowLeft)} onPointerUp={stopTouch} onPointerCancel={stopTouch} aria-label="Move left">◀</button>
