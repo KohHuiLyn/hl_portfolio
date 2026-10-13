@@ -230,6 +230,7 @@ main {
 }
 
 .star {
+  color: var(--paper);
   justify-self: center;
   max-width: 410px;
   transform: translateY(clamp(48px, 8vw, 104px));

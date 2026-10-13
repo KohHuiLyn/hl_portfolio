@@ -70,11 +70,34 @@ const plantPalScreens = [
   ...Array.from({ length: 14 }, (_, index) => `/assets/projects/plantpal/mobile_screenshots/plantpal(${index + 1}).png`),
 ];
 
+const pawgressMobileScreens = [
+  '1_home.png',
+  '2_home_drawer_1.png',
+  '3_home_drawer_2.png',
+  '4_loading.png',
+  '5_park.png',
+  '6_exercise_start.png',
+  '7_exercise.png',
+  '8_exercise_complete.png',
+  '9_park_exercise_complete.png',
+  '10_profile_top.png',
+  '11_profile_bottom.png',
+  '12_profile_reward.png',
+  '13_exercise_plan.png',
+  '14_exercise_plan2.png',
+  '15_streak.png',
+].map((filename, index) => ({
+  id: `pawgress-screen-${index + 1}`,
+  src: `/assets/projects/pawgress/mobile-screens/${filename}`,
+  alt: `Pawgress mobile interface screen ${index + 1}`,
+  variant: 'mobile',
+}));
+
 const eloScreens = Array.from({ length: 14 }, (_, index) => `/assets/projects/elo/screenshots/${index + 1}_${[
   'Login', 'Register', 'FindTournament_No_Champion', 'FindTournament_Champion_Modal', 'FindTournament_Champion_Selected', 'FindTournament_In_Queue', 'FindTournament_Speedup_Queue_Modal', 'TournamentBracket', 'TournamentBracket_Modal', 'TournamentBracket_Next_Round', 'Postgame', 'History', 'Profile', 'Profile_Edit_Profile',
 ][index]}.png`);
 
-export const projects = [
+const projectCatalog = [
   {
     id: 'adtro',
     title: 'Adtro',
@@ -283,6 +306,113 @@ export const projects = [
               body: 'The desktop application supports livestreamers who require a multi-camera setup. It allows users to switch cameras, add overlays while streaming. Built with Electron and ReactJS, it extended Adtro’s ecosystem beyond web and mobile while maintaining consistency with the shared design system.',
             },
 
+          ],
+        },
+      ],
+    },
+  },
+
+  {
+    id: 'pawgress',
+    title: 'Pawgress',
+    tags: ['UI/UX', 'User Research', 'Figma', 'Accessibility'],
+    image: '/assets/projects/pawgress/Pawgress_thumbnail.png',
+    accent: '#f29a24',
+    description: 'A senior-friendly exercise app that pairs personalised exercise plans with a virtual pet, turning rehabilitation routines into a clearer and more motivating daily experience.',
+    caseStudy: {
+      tabs: [
+        {
+          id: 'overview',
+          label: 'Overview',
+          sections: [
+            {
+              type: 'text',
+              title: 'Overview',
+              eyebrow: 'Final-year project',
+              accent: 'orange',
+              body: [
+                'Pawgress is a mobile exercise experience designed for seniors who have been given personalised routines by their clinicians. Users complete guided exercises while caring for their pet, a virtual pet who grows alongside their progress.',
+                'The experience brings exercise plans, guided sessions, progress tracking, streaks, rewards, and pet care into one approachable journey. Its playful world makes routine movement feel more encouraging without obscuring the practical information seniors need during each session.',
+              ],
+            },
+            {
+              type: 'video',
+              title: 'Video Demo',
+              accent: 'green',
+              url: 'https://www.youtube.com/watch?v=5bG2fgmBtfo',
+              body: 'A walkthrough of Pawgress, from caring for their pet and choosing an exercise to completing a guided session and tracking progress.',
+            },
+            {
+              type: 'gallery',
+              title: 'Core Journey',
+              accent: 'blue',
+              images: pawgressMobileScreens.slice(0, 9),
+            },
+          ],
+        },
+        {
+          id: 'accessible-design',
+          label: 'Accessible Design',
+          tags: ['UI/UX', 'Accessibility', 'Figma'],
+          sections: [
+            {
+              type: 'text',
+              title: 'Designing for Seniors',
+              eyebrow: 'Accessibility first',
+              accent: 'green',
+              body: [
+                'Because Pawgress is designed for seniors, accessibility shaped the interface from the start. Large touch targets, high-contrast controls, familiar labels, and consistent navigation reduce the effort needed to understand each screen and move through a task.',
+                'Exercise sessions use short instructions, strong visual hierarchy, visible timers, and clearly separated controls. A persistent “I am in pain” action gives users an immediate way to respond when an exercise is uncomfortable, while progress bars and completion states make feedback easy to recognise.',
+                'The virtual-pet layer adds motivation through daily progress, streaks, and rewards, but the core exercise journey remains direct and predictable.',
+              ],
+            },
+            {
+              type: 'imageText',
+              title: 'A Clearer Exercise Flow',
+              accent: 'orange',
+              image: '/assets/projects/pawgress/Maze_testing_Old_vs_New.jpg',
+              alt: 'Side-by-side comparison of Pawgress interface versions used in testing',
+              layout: 'stacked',
+              body: 'We compared two versions of the exercise journey to evaluate how clearly seniors could choose exercises, follow a session, and understand their progress. The revised flow strengthens hierarchy, enlarges key controls, and makes the relationship between exercising with their pet and earning rewards more visible.',
+            },
+          ],
+        },
+        {
+          id: 'user-testing',
+          label: 'Maze Testing',
+          tags: ['User Research', 'Maze', 'A/B Testing'],
+          sections: [
+            {
+              type: 'text',
+              title: 'Maze A/B Testing',
+              eyebrow: 'Validation',
+              accent: 'blue',
+              body: [
+                'We used Maze to test Version A against Version B of the exercise flow. Participants were asked to complete an exercise with their pet before answering questions about ease of use, clarity, how connected their pet felt to the journey, and which version they preferred.',
+                'The study captured task completion, time on task, navigation paths, drop-off, and misclicks. These signals helped us identify where the interface still caused hesitation and gave us evidence for refining labels, controls, and the sequence of steps.',
+              ],
+            },
+            {
+              type: 'imageText',
+              title: 'Testing Results',
+              accent: 'green',
+              image: '/assets/projects/pawgress/Maze_testing.png',
+              alt: 'Maze testing results for the Pawgress exercise flow',
+              layout: 'stacked',
+              body: 'The recorded exercise task achieved a 100% success rate across six responses. We reviewed the paths and misclick data alongside participant preferences to understand not only whether users completed the task, but where the experience could become more confident and efficient.',
+            },
+          ],
+        },
+        {
+          id: 'screens',
+          label: 'Product Screens',
+          sections: [
+            {
+              type: 'gallery',
+              title: 'Product Screens',
+              accent: 'red',
+              images: pawgressMobileScreens,
+            },
           ],
         },
       ],
@@ -707,6 +837,14 @@ export const projects = [
           accent: 'red',
         },
         {
+          type: 'embed',
+          title: 'Influencer Portfolio',
+          accent: 'blue',
+          body: 'A curated selection of Jiakerz collaborations, audience highlights, and social content work.',
+          linkUrl: 'https://canva.link/jiakerz-portfolio',
+          linkLabel: 'View the Jiakerz influencer portfolio',
+        },
+        {
           type: 'tiktokShowcase',
           title: 'Popular',
           accent: 'green',
@@ -760,6 +898,11 @@ export const projects = [
       ],
     },
   },
+];
+
+export const projects = [
+  projectCatalog.find((project) => project.id === 'pawgress'),
+  ...projectCatalog.filter((project) => project.id !== 'pawgress'),
 ];
 
 export const recentProjects = projects.slice(0, 6);
