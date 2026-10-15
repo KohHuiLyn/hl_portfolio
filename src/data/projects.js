@@ -93,6 +93,12 @@ const pawgressMobileScreens = [
   variant: 'mobile',
 }));
 
+const jiakerzPortfolioSlides = Array.from({ length: 8 }, (_, index) => ({
+  id: `jiakerz-portfolio-slide-${index + 1}`,
+  src: `/assets/projects/jiakerz/portfolio-slides/slide-${index + 1}.jpg`,
+  alt: `Jiakerz influencer portfolio slide ${index + 1}`,
+}));
+
 const eloScreens = Array.from({ length: 14 }, (_, index) => `/assets/projects/elo/screenshots/${index + 1}_${[
   'Login', 'Register', 'FindTournament_No_Champion', 'FindTournament_Champion_Modal', 'FindTournament_Champion_Selected', 'FindTournament_In_Queue', 'FindTournament_Speedup_Queue_Modal', 'TournamentBracket', 'TournamentBracket_Modal', 'TournamentBracket_Next_Round', 'Postgame', 'History', 'Profile', 'Profile_Edit_Profile',
 ][index]}.png`);
@@ -830,38 +836,52 @@ const projectCatalog = [
     caseStudy: {
       sections: [
         {
-          type: 'text',
+          type: 'imageText',
           title: 'Overview',
-          eyebrow: 'Content Brand',
           body: 'A food discovery content brand where I worked on content creation, visual identity, storytelling, and short-form social media engagement.',
+          image: '/assets/projects/jiakerz/tiktoks/jiakerz.jpg',
+          alt: 'Jiakerz TikTok food content profile and video highlights',
+          imagePosition: 'right',
           accent: 'red',
         },
         {
-          type: 'embed',
+          type: 'carousel',
           title: 'Influencer Portfolio',
           accent: 'blue',
-          body: 'A curated selection of Jiakerz collaborations, audience highlights, and social content work.',
-          linkUrl: 'https://canva.link/jiakerz-portfolio',
-          linkLabel: 'View the Jiakerz influencer portfolio',
+          images: jiakerzPortfolioSlides,
         },
         {
           type: 'tiktokShowcase',
-          title: 'Popular',
+          title: 'Popular Videos',
           accent: 'green',
           items: [
-            { id: 'jiakerz-popular-1', url: 'https://www.tiktok.com/@jiakerz/photo/7649655650615708948?is_from_webapp=1&sender_device=pc' },
-            { id: 'jiakerz-popular-2', url: 'https://www.tiktok.com/@jiakerz/photo/7566868098792328469?is_from_webapp=1&sender_device=pc' },
-            { id: 'jiakerz-popular-3', url: 'https://www.tiktok.com/@jiakerz/photo/7630781905020996884?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-elfuego', label: 'Elfuego', image: '/assets/projects/jiakerz/tiktoks/popular/1_elfuego.PNG', url: 'https://www.tiktok.com/@jiakerz/photo/7668528560570731796?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-the-colony', label: 'The Colony', image: '/assets/projects/jiakerz/tiktoks/popular/2_the_colony.PNG', url: 'https://www.tiktok.com/@jiakerz/photo/7649655650615708948?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-sakedokoro-eizaburo', label: 'Sakedokoro Eizaburo', image: '/assets/projects/jiakerz/tiktoks/popular/3_sakedokoro.PNG', url: 'https://www.tiktok.com/@jiakerz/photo/7566868098792328469?is_from_webapp=1&sender_device=pc' },
           ],
         },
         {
           type: 'tiktokShowcase',
-          title: 'Brand Deals',
+          title: 'Collaborations',
           accent: 'orange',
           items: [
-            { id: 'jiakerz-huevos', label: 'Huevos', url: 'https://www.tiktok.com/@jiakerz/photo/7660756017172483348?is_from_webapp=1&sender_device=pc' },
-            { id: 'jiakerz-kream-korean', label: 'KREAM Korean', url: 'https://www.tiktok.com/@jiakerz/video/7647764741158374676?is_from_webapp=1&sender_device=pc&web_id=7659688294926452241' },
-            { id: 'jiakerz-wanglu-hotpot', label: 'Wanglu Hotpot', url: 'https://www.tiktok.com/@jiakerz/photo/7654822032575646997?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-huevos', label: 'Huevos', image: '/assets/projects/jiakerz/tiktoks/collabs/1_huevos.PNG', url: 'https://www.tiktok.com/@jiakerz/photo/7660756017172483348?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-wanglu-hotpot', label: 'Wanglu Hotpot', image: '/assets/projects/jiakerz/tiktoks/collabs/2_wanglu_hotpot.PNG', url: 'https://www.tiktok.com/@jiakerz/photo/7654822032575646997?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-burnt-cones', label: 'Burnt Cones', image: '/assets/projects/jiakerz/tiktoks/collabs/3_burnt_cones.PNG', url: 'https://www.tiktok.com/@jiakerz/photo/7679404981023264020?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-family-mookata', label: 'Family Mookata', image: '/assets/projects/jiakerz/tiktoks/collabs/4_family_mookata.PNG', url: 'https://www.tiktok.com/@jiakerz/photo/7673738140443512085?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-kream-korean', label: 'KREAM Korean', image: '/assets/projects/jiakerz/tiktoks/collabs/5_kream_korean.PNG', url: 'https://www.tiktok.com/@jiakerz/video/7647764741158374676?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-tofutofu-matcha', label: 'tofutofu matcha', image: '/assets/projects/jiakerz/tiktoks/collabs/6_tofu_tofu.PNG', url: 'https://www.tiktok.com/@jiakerz/video/7695994216169753876?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-mr-mrs-marketplace', label: 'Mr & Mrs Marketplace', image: '/assets/projects/jiakerz/tiktoks/collabs/7_mr_mrs_marketplace.PNG', url: 'https://www.tiktok.com/@jiakerz/video/7585055262998940949?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-yuen-yeung', label: 'Yuen Yeung', image: '/assets/projects/jiakerz/tiktoks/collabs/8_yuen_yeung.PNG', url: 'https://www.tiktok.com/@jiakerz/video/7584655433718140180?is_from_webapp=1&sender_device=pc' },
+          ],
+        },
+        {
+          type: 'tiktokShowcase',
+          title: 'TikTok Products',
+          accent: 'blue',
+          items: [
+            { id: 'jiakerz-naoki-matcha', label: 'Naoki Matcha Powder', image: '/assets/projects/jiakerz/tiktoks/product/2_naoki_matcha.PNG', url: 'https://www.tiktok.com/@jiakerz/video/7693148306553310485?is_from_webapp=1&sender_device=pc' },
+            { id: 'jiakerz-naoki-hojicha', label: 'Naoki Hojicha Powder', image: '/assets/projects/jiakerz/tiktoks/product/1_naoki_hojicha.PNG', url: 'https://www.tiktok.com/@jiakerz/video/7682631918634028308?is_from_webapp=1&sender_device=pc' },
           ],
         },
         {

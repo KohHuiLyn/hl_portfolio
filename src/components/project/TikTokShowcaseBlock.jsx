@@ -1,9 +1,6 @@
 import React from 'react';
-
-function getTikTokEmbedUrl(url) {
-  const match = url?.match(/tiktok\.com\/@[^/]+\/(?:video|photo)\/(\d+)/);
-  return match ? `https://www.tiktok.com/embed/v2/${match[1]}` : null;
-}
+import { ExternalLink } from 'lucide-react';
+import { SiTiktok } from 'react-icons/si';
 
 export function TikTokShowcaseBlock({ title, items = [], accent = 'red' }) {
   return (
@@ -12,16 +9,23 @@ export function TikTokShowcaseBlock({ title, items = [], accent = 'red' }) {
       <div className="case-tiktok-grid">
         {items.map((item) => (
           <article className="case-tiktok-card" key={item.id ?? item.url}>
-            {item.label && <h3>{item.label}</h3>}
-            <div className="case-tiktok-frame">
-              <iframe
-                src={getTikTokEmbedUrl(item.url)}
-                title={item.label ?? 'TikTok post'}
-                loading="lazy"
-                allow="encrypted-media; fullscreen"
-                allowFullScreen
-              />
-            </div>
+            <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${item.label ?? 'TikTok post'} on TikTok`}>
+              {item.image && (
+                <span className="case-tiktok-preview">
+                  <img src={item.image} alt={`${item.label ?? 'TikTok post'} preview`} />
+                  <span className="case-tiktok-preview-badge" aria-hidden="true"><SiTiktok /></span>
+                </span>
+              )}
+              <span className="case-tiktok-card-footer">
+                <span className="case-tiktok-icon" aria-hidden="true"><SiTiktok /></span>
+                <span className="case-tiktok-card-copy">
+                  <span>{item.url.includes('/photo/') ? 'Photo post' : 'Video'}</span>
+                  <h3>{item.label ?? 'View TikTok post'}</h3>
+                  <strong>Open on TikTok</strong>
+                </span>
+                <ExternalLink className="case-tiktok-external" aria-hidden="true" />
+              </span>
+            </a>
           </article>
         ))}
       </div>
